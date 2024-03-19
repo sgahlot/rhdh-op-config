@@ -1,0 +1,42 @@
+= RHDH setup/config
+Documentation for installing and configuring RHDH operator.
+
+:icons: font
+:note-caption: :information_source:
+
+:url-rhdh-release-notes: https://access.redhat.com/documentation/en-us/red_hat_developer_hub/1.1
+:url-rhdh-admin-guide: https://access.redhat.com/documentation/en-us/red_hat_developer_hub/1.1/html/administration_guide_for_red_hat_developer_hub/index
+:url-rhdh-install-using-op: https://access.redhat.com/documentation/en-us/red_hat_developer_hub/1.1/html/administration_guide_for_red_hat_developer_hub/proc-install-rhdh-operator_admin-rhdh
+
+
+
+
+=== Prerequisites
+Install the RHDH instance using the Operator.
+
+=== Configuration
+Create a file named `.env` with the contents of `env.template` and update `.env` with the correct credentials for GitHub and Google, as well as values for all the other varibles.
+
+Once the correct values are set in the `.env` file, please run the following command to create the Backstage resources in OpenShift:
+[source,bash]
+----
+oc project <NAMESPACE_WHERE_RHDH_IS_INSTALLED>
+. ./.env                                            # <.>
+envsubst < rhdh-secrets.yml | oc apply -f -         # <.>
+oc apply -f rhdh-cr-app_config_n_cm.yml             # <.>
+----
+<1> adds the environment variables from `.env` file, in the current environment
+<2> The `envsubst` command substitutes the variables in the `rhdh-secrets.yml` file with their values and `oc apply` will use that to create the resources.
+<3> Creates the Backstage deployment along with the provided configMaps in the `rh-cr-app_config_n_cm.yml` file, in the namespace selected, in OpenShift. It also makes use of the secrets created in the previous command.
+
+[NOTE]
+The `envsubst` command is available on Mac and Linux.
+
+=== References
+---
+
+* {url-rhdh-admin-guide}[RHDH Release Notes] +
+* {url-rhdh-admin-guide}[RHDH Admin Guide] +
+* {url-rhdh-install-using-op}[RHDH Install/configure using the Operator] +
+
+
