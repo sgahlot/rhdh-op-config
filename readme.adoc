@@ -42,7 +42,10 @@ The `envsubst` command is available on Mac and Linux.
 
 === Using the official docs
 
-Please follow the instructions given in {url-rhdh-configure-using-docs}[Red Hat Developer Hub configuration].
+Please follow the instructions given in:
+
+* {url-rhdh-configure-using-docs}[Create Developer Hub instance] 
+* {url-rhdh-add-custom-resource}[Configure Developer Hub instance] +
 
 == Dynamic plugins
 
@@ -53,7 +56,8 @@ To see the list of all the dynamic plugins, append the following to the RHDH roo
 
 * {url-rhdh-lifecycle}[RHDH - Lifecycle] +
 * {url-rhdh-prod-doc}[RHDH - Product documentation] +
-* {url-rhdh-install-using-op}[RHDH - Install/configure using the Operator] +
-* {url-rhdh-add-custom-resource}[RHDH - Add custom app config] +
-* {url-rhdh-config-dynamic-plugins}[RHDH - configure dynamic plugins] +
+* {url-rhdh-install-using-op}[RHDH - Install using the Operator] +
+* {url-rhdh-configure-using-docs}[RHDH - Create Developer Hub instance] 
+* {url-rhdh-add-custom-resource}[RHDH - Configure Developer Hub instance] +
+* {url-rhdh-config-dynamic-plugins}[RHDH - Configure dynamic plugins] +
 
