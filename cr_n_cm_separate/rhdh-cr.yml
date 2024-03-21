@@ -1,0 +1,22 @@
+apiVersion: rhdh.redhat.com/v1alpha1
+kind: Backstage
+metadata:
+  name: developer-hub
+spec:
+  database:
+    enableLocalDb: true
+  #  authSecretName: rhdh-db-secret
+  application:
+    replicas: 1
+    appConfig:
+      configMaps:
+        - name: "rhdh-config-auth"
+        - name: "rhdh-config-app"
+        - name: "rhdh-config-catalog"
+      mountPath:  /opt/app-root/src
+    dynamicPluginsConfigMapName: rhdh-dynamic-plugins
+    extraEnvs:
+      secrets:
+        - name: "rhdh-secrets"
+
+
