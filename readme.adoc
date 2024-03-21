@@ -9,6 +9,7 @@ Documentation for installing and configuring RHDH operator.
 :url-rhdh-add-custom-resource: https://access.redhat.com/documentation/en-us/red_hat_developer_hub/1.1/html/administration_guide_for_red_hat_developer_hub/proc-install-rhdh-operator_admin-rhdh#configuring-the-developer-hub-custom-resource
 :url-rhdh-config-dynamic-plugins: https://access.redhat.com/documentation/en-us/red_hat_developer_hub/1.1/html/administration_guide_for_red_hat_developer_hub/proc-install-rhdh-operator_admin-rhdh#configuring-dynamic-plugins-with-the-operator
 :url-rhdh-lifecycle: https://access.redhat.com/support/policy/updates/developerhub
+:url-rhdh-configure-using-docs: https://access.redhat.com/documentation/en-us/red_hat_developer_hub/1.1/html/administration_guide_for_red_hat_developer_hub/proc-install-rhdh-operator_admin-rhdh#as-a-developer
 
 
 
@@ -17,6 +18,9 @@ Documentation for installing and configuring RHDH operator.
 Install the RHDH instance using the Operator.
 
 == Configuration
+
+=== Using the config files
+
 Create a file named `.env` with the contents of `env.template` and update `.env` with the correct credentials for GitHub and Google, as well as values for all the other varibles.
 
 Once the correct values are set in the `.env` file, please run the following command to create the Backstage resources in OpenShift:
@@ -34,6 +38,11 @@ oc apply -f rhdh-cr_n_cm.yml                    # <.>
 [NOTE]
 The `envsubst` command is available on Mac and Linux.
 
+---
+
+=== Using the official docs
+
+Please follow the instructions given in {url-rhdh-configure-using-docs}[Red Hat Developer Hub configuration].
 
 == Dynamic plugins
 
