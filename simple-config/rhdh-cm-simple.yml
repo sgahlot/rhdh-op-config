@@ -1,0 +1,30 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: rhdh-app-config-simple
+data:
+  app-config.app.yml: |
+
+    app:
+      title: "RHDH AppEng Demo"
+      baseUrl: ${HOST_URL}
+
+    backend:
+      baseUrl: "${HOST_URL}"
+
+      cors:
+        origin: "${HOST_URL}"
+        methods: [GET, HEAD, PATCH, POST, PUT, DELETE]
+
+      auth:
+        keys:
+          - secret: "${BACKEND_SECRET}"
+
+    auth:
+      environment: development
+
+      providers:
+        github:
+          development:
+            clientId: ${AUTH_GITHUB_CLIENT_ID}
+            clientSecret: ${AUTH_GITHUB_CLIENT_SECRET}
