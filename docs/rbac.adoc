@@ -1,0 +1,79 @@
+= RHDH setup/config - RBAC
+Documentation for installing and configuring RBAC plugin, for Operator installed RHDH instance.
+
+:icons: font
+:note-caption: :information_source:
+
+Create a configMap with following config:
+
+[source,yaml]
+----
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: rhdh-config-rbac
+data:
+  rhdh-config-rbac.yaml: |
+    permission:
+      enabled: true
+      rbac:
+        policies-csv-file: ./rbac-policy.csv
+        admin:
+          users:
+            - name: user:default/<YOUR_USER>
+----
+
+Create another configMap with following config:
+
+[source,yaml]
+----
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: rhdh-rbac-policy
+data:
+  rbac-policy.csv: |
+    p, role:default/guests, catalog-entity, read, allow
+    p, role:default/guests, catalog.entity.create, create, allow
+
+    g, user:default/<YOUR_USER>, role:default/guests
+----
+
+Create third configMap with following config (_or add the rbac dynamic plugin to the list of existing dynamic plugins, if such a configMap already exists_):
+
+[source,yaml]
+----
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: rhdh-dynamic-plugins
+data:
+  dynamic-plugins.yaml: |
+    includes:
+      - dynamic-plugins.default.yaml
+    plugins:
+      - package: './dynamic-plugins/dist/janus-idp-backstage-plugin-rbac'
+        disabled: false
+        pluginConfig: {}
+----
+
+
+Now, modify the `backstage` config to add the following:
+
+[source,yaml]
+----
+  application:
+    replicas: 1
+    appConfig:
+      configMaps:
+        - name: "rhdh-config"
+        - name: "rhdh-config-rbac"                          # <.>
+      mountPath:  /opt/app-root/src
+    dynamicPluginsConfigMapName: rhdh-dynamic-plugins       # <.>
+    extraFiles:
+        configMaps:
+          - name: rhdh-config-rbac-policy                   # <.>
+----
+<1> Add the configMap for our `rbac`.
+<2> Add the reference to load the dynamic plugins
+<3> Add configMap for rbac policy to be mounted
