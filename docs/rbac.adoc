@@ -30,7 +30,7 @@ Create another configMap with following config:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: rhdh-rbac-policy
+  name: rhdh-config-rbac-policy
 data:
   rbac-policy.csv: |
     p, role:default/guests, catalog-entity, read, allow
