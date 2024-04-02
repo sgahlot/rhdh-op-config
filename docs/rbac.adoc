@@ -33,10 +33,16 @@ metadata:
   name: rhdh-config-rbac-policy
 data:
   rbac-policy.csv: |
-    p, role:default/guests, catalog-entity, read, allow
-    p, role:default/guests, catalog.entity.create, create, allow
+    p, role:default/team-x, catalog-entity, read, allow
+    p, role:default/team-x, catalog.entity.create, create, allow
+    p, role:default/team-x, catalog.entity.create, read, allow
+    p, role:default/team-x, catalog.entity.delete, delete, deny
+    p, role:default/team-x, catalog.location.create, create, allow
+    p, role:default/team-x, catalog.location.read, read, allow
+    p, role:default/team-x, policy-entity, create, allow
+    p, role:default/team-x, policy-entity, read, allow
 
-    g, user:default/<YOUR_USER>, role:default/guests
+    g, user:default/<YOUR_USER>, role:default/team-x
 ----
 
 Create third configMap with following config (_or add the rbac dynamic plugin to the list of existing dynamic plugins, if such a configMap already exists_):
@@ -54,7 +60,6 @@ data:
     plugins:
       - package: './dynamic-plugins/dist/janus-idp-backstage-plugin-rbac'
         disabled: false
-        pluginConfig: {}
 ----
 
 
