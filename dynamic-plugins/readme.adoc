@@ -4,8 +4,7 @@ Documentation for creating dynamic plugins
 :icons: font
 :note-caption: :information_source:
 
-:url-dynamic-plugin-1: https://www.youtube.com/watch?v=yVzjTU3JamE
-:url-dynamic-plugin-2: https://github.com/janus-idp/backstage-showcase/blob/main/showcase-docs/dynamic-plugins.md#frontend-layout-configuration
+:url-dynamic-plugin-1: https://github.com/janus-idp/backstage-showcase/blob/main/showcase-docs/dynamic-plugins.md#frontend-layout-configuration
 
 
 == Prerequisites
@@ -54,12 +53,6 @@ _This is needed for export-dynamic command to work. Change the baseUrl to whatev
   "backstage": {
     "role": "frontend-plugin"
   },
-  "scripts": {
-    "build": "backstage-cli package build",
-    "clean": "backstage-cli package clean",
-    "clean-dynamic-sources": "yarn clean && rm -Rf node_modules",
-    "export-dynamic": "janus-cli package export-dynamic-plugin"         # <.>
-  },
   "dependencies": {
     "@parsifal-m/plugin-dev-quotes-homepage": "^3.0.4",                 # <.>
     "react": "^18.2.0",
@@ -73,13 +66,19 @@ _This is needed for export-dynamic command to work. Change the baseUrl to whatev
     "dist"                                                              # <.>
     "dist-scalprum"                                                     # <.>
   ],
+  "scripts": {
+    "build": "backstage-cli package build",
+    "clean": "backstage-cli package clean",
+    "clean-dynamic-sources": "yarn clean && rm -Rf node_modules",
+    "export-dynamic": "janus-cli package export-dynamic-plugin"         # <.>
+  },
 ----
-<1> add `export-dynamic` to scripts
-<2> add third-party plugin dependency
-<3> add `@backstage/cli` as devDependency
-<4> add `@janus-idp/cli` as devDependency, which provides `export-dynamic-plugin` command
-<5> add `dist` to the package files list
-<6> add `dist-scalprum` to the package files list
+<1> add third-party plugin dependency
+<2> add `@backstage/cli` as devDependency
+<3> add `@janus-idp/cli` as devDependency, which provides `export-dynamic-plugin` command
+<4> add `dist` to the package files list
+<5> add `dist-scalprum` to the package files list
+<6> add `export-dynamic` to scripts
 
 You might need to add the devDependencies if `yarn export-dynamic` throws an error like given below:
 ```
@@ -97,7 +96,7 @@ yarn export-dynamic              # <.>
 Now, you can deploy this dynamic plugin in OpenShift, as well as reference it in RHDH, by following the instructions at <<pack_dynamic_plugins>>
 
 
-=== Dynamic plugin wrapper for third-party backend plugin
+=== Dynamic plugin wrapper for third-party backend plugin - WIP
 To create a dynamic plugin support to a third-party backend plugin, you'll need to:
 
 * Import the third-party plugin as a dependency 
@@ -135,7 +134,7 @@ export * from './dynamic/index';
   
 And then finally, export it as a dynamic plugin.
 
-== Dynamic plugin
+== Dynamic plugin - WIP
 To add dynamic plugin support to a third-party plugin, a wrapper plugin can be created. This wrapper plugin will:
 
 * import the third-party plugin as a dependency.
@@ -199,7 +198,7 @@ data:
 <5> Sidebar menu item text
 <6> Unique path in the app
 
-For any updates to this plugin, please run the following commands:
+For any updates to this plugin, or if you add more dynamic plugins, please run the following commands from your plugin directory:
 
 [source,bash,options="nowrap"]
 ----
@@ -207,15 +206,12 @@ INTEGRITY_HASH=$(npm pack --pack-destination $DYNAMIC_PLUGIN_ROOT_DIR --json | j
 echo "Integrity Hash: $INTEGRITY_HASH"                                      # <.>
 oc start-build plugin-registry --from-dir=$DYNAMIC_PLUGIN_ROOT_DIR --wait   # <.>
 ----
-<1> Stores the new integrity hash of dynamic plugin tgz file after running `npm pack` command
+<1> Stores the new integrity hash of the dynamic plugin tgz file after running `npm pack` command
 <2> Displays the integrity hash. This value will be needed later on when adding this dynamic plugin to the configMap
 <3> Starts a new build for plugin-registry using the `DYNAMIC_PLUGIN_ROOT_DIR` dir as the source
 
 
-== Questions
-* Why is the `app-config.yaml` needed when running `yarn export-dynamic` command (for frontend plugin)?
 
 == References
 
-* {url-dynamic-plugin-1}[RHDH - Dynamic plugin youtube video] +
-* {url-dynamic-plugin-2}[RHDH - Dynamic plugin doc] +
+* {url-dynamic-plugin-1}[RHDH - Dynamic plugin doc] +

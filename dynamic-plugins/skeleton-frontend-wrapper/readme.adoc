@@ -1,0 +1,25 @@
+= RHDH dynamic plugins
+This directory contains skeleton files for creating a dynamic plugin wrapper for third-party frontend plugin
+
+:icons: font
+:uri-dynamic-plugin-readme: https://github.com/sgahlot/rhdh-op-config/blob/main/dynamic-plugins/readme.adoc
+
+== Skeleton plugin wrapper for frontend plugin
+
+To create a dynamic plugin wrapper for third-party frontend plugin, please follow these stpes:
+
+* Replace `export * from '<THIRD_PARTY_PLUGIN>';` in src/index.ts with correct third-party plugin
+* Copy `package.json.template` to `package.json`
+* Replace the following with correct values, in `package.json`:
+```
+  "name": "<PACKAGE_NAME>-wrapper"                              # <.>
+  "description": "Wrapper for <3RD_PARTY_PLUGIN>"               # <.>
+  "dependencies": {
+    "<3RD_PARTY_PLUGIN>": "<3RD_PARTY_PLUGIN_VERSION>",         # <.>
+```
+<1> Replace with your plugin name
+<2> Replace with correct description for your plugin
+<3> Replace with the third-party plugin and its version
+
+
+Once the above changes are complete, please follow the instructions in {uri-dynamic-plugin-readme}[Dynamic Plugins readme] to complete the configuration and installation of this dynamic plugin wrapper.
