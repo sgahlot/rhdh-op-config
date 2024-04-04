@@ -12,14 +12,16 @@ To create a dynamic plugin wrapper for third-party frontend plugin, please follo
 * Copy `package.json.template` to `package.json`
 * Replace the following with correct values, in `package.json`:
 ```
-  "name": "<PACKAGE_NAME>-wrapper"                              # <.>
-  "description": "Wrapper for <3RD_PARTY_PLUGIN>"               # <.>
+  "name": "<PACKAGE_NAME>-wrapper",                             # <.>
+  "description": "Wrapper for <3RD_PARTY_PLUGIN>",              # <.>
+  "author": "<AUTHOR>",                                         # <.>
   "dependencies": {
     "<3RD_PARTY_PLUGIN>": "<3RD_PARTY_PLUGIN_VERSION>",         # <.>
 ```
 <1> Replace with your plugin name
 <2> Replace with correct description for your plugin
-<3> Replace with the third-party plugin and its version
+<3> Replace with correct author name
+<4> Replace with the third-party plugin and its version
 
 
 Once the above changes are complete, please follow the instructions in {uri-dynamic-plugin-readme}[Dynamic Plugins readme] to complete the configuration and installation of this dynamic plugin wrapper.

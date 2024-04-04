@@ -4,8 +4,8 @@ Documentation for creating dynamic plugins
 :icons: font
 :note-caption: :information_source:
 
-:url-dynamic-plugin-1: https://github.com/janus-idp/backstage-showcase/blob/main/showcase-docs/dynamic-plugins.md#frontend-layout-configuration
-
+:url-dynamic-plugins: https://github.com/janus-idp/backstage-showcase/blob/main/showcase-docs/dynamic-plugins.md#frontend-layout-configuration
+:uri-dynamic-plugin-starter-files: https://github.com/sgahlot/rhdh-op-config/tree/main/dynamic-plugins/frontend-wrapper-starter
 
 == Prerequisites
 Install the RHDH instance using the Operator.
@@ -13,7 +13,7 @@ Install the RHDH instance using the Operator.
 == Dynamic plugin wrapper
 To add dynamic plugin support to a third-party plugin, a wrapper plugin can be created. This wrapper plugin will:
 
-* Create an skeleton package
+* Create a starter package
 * import the third-party plugin as a dependency
 * Modify `package.json`
 * Modify `src/dynamic/index.ts`
@@ -22,9 +22,9 @@ To add dynamic plugin support to a third-party plugin, a wrapper plugin can be c
 The wrapper plugin can be used to add dynamic support to either a frontend or backend plugin. There are small differences between wrapping the two.
 
 === Dynamic plugin wrapper for third-party frontend plugin
-To create a dynamic plugin support to a third-party frontend plugin, you'll need to:
+To create a dynamic plugin support to a third-party frontend plugin, you'll need to either follow the steps given below or take the starter files from {uri-dynamic-plugin-starter-files}[Dynamic plugin starter files]:
 
-* Create a skeleton package:
+* Create a starter package:
 [source, bash]
 ----
 yarn set version classic
@@ -222,4 +222,4 @@ oc start-build plugin-registry --from-dir=$DYNAMIC_PLUGIN_ROOT_DIR --wait   # <.
 
 == References
 
-* {url-dynamic-plugin-1}[RHDH - Dynamic plugin doc] +
+* {url-dynamic-plugins}[RHDH - Dynamic plugin doc] +
