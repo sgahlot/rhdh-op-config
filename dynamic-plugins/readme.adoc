@@ -178,7 +178,7 @@ data:
       - dynamic-plugins.default.yaml
     plugins:
       <EXISTING_DYNAMIC_PLUGINS>
-      - package: 'http://plugin-registry:8080/test-rhdh-devquote-plugin-0.1.0.tgz'  # <.>
+      - package: 'http://plugin-registry:8080/<NAME_OF_YOUR_DYNAMIC_PLUGIN>.tgz'    # <.>
         disabled: false
         integrity: '<INTEGRITY_HASH_VALUE_FROM_npm_pack_command>'                   # <.>
         pluginConfig:
@@ -191,7 +191,7 @@ data:
                       text: <THIRD_PARTY_>                                          # <.>
                     path: /quote                                                    # <.>
 ----
-<1> tgz file name (prefixed with `http://plugin-registry:8080` - this is where our plugin-registry app is running)
+<1> tgz file name that was created with `npm pack` command (prefixed with `http://plugin-registry:8080` - this is where our plugin-registry app is running)
 <2> Integrity hash generated from `npm pack` output
 <3> Name of the wrapper plugin
 <4> Component name of the third party plugin. Defauls to the `export` in index.ts
