@@ -150,8 +150,10 @@ follow these instructions _in the directory where you have code for your dynamic
 DYNAMIC_PLUGIN_ROOT_DIR=./tmp-dynamic-plugin-root       # <.>
 mkdir $DYNAMIC_PLUGIN_ROOT_DIR
 INTEGRITY_HASH=$(npm pack --pack-destination $DYNAMIC_PLUGIN_ROOT_DIR --json | jq -r '.[0].integrity')  # <.>
+
 ls -l $DYNAMIC_PLUGIN_ROOT_DIR                                              # <.>
 echo "Integrity Hash: $INTEGRITY_HASH"                                      # <.>
+
 oc project <YOUR_PROJECT_OR_NAMESPACE>
 oc new-build httpd --name=plugin-registry --binary                          # <.>
 oc start-build plugin-registry --from-dir=$DYNAMIC_PLUGIN_ROOT_DIR --wait   # <.>
@@ -164,6 +166,11 @@ oc new-app --image-stream=plugin-registry                                   # <.
 <5> Creates a new build configuration
 <6> Starts a new build for plugin-registry using the `DYNAMIC_PLUGIN_ROOT_DIR` dir as the source
 <7> Creates a new app using the plugin-registry build
+
+_You can set an  env var `SKIP_INTEGRITY_CHECK: true` if you prefer to not use the integrity hash, or want to quickly test changes in your plugin. If this env variable is set, then you can skip setting the `integrity` for the dynamic plugin_
+
+
+'''
 
 Modify the dynamic plugins configMap by adding the following config:
 [source, yaml]
@@ -198,6 +205,7 @@ data:
 <5> Sidebar menu item text
 <6> Unique path in the app
 
+'''
 For any updates to this plugin, or if you add more dynamic plugins, please run the following commands from your plugin directory:
 
 [source,bash,options="nowrap"]
