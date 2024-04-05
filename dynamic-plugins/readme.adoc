@@ -28,12 +28,10 @@ The wrapper plugin can be used to add dynamic support to either a frontend or ba
 '''
 
 === Dynamic plugin wrapper for third-party frontend plugin   [[wrapper_frontend_plugin]]
-To create a dynamic plugin support to a third-party frontend plugin, you'll need to either follow the steps given below:
 
-[NOTE]
-_You can take the starter files from {uri-dynamic-plugin-fe-starter-files}[Dynamic plugin wrapper for frontend - starter files] and copy them to an empty directory_
+You can create dynamic plugin support for a third-party frontend plugin with or without starter files. If you want to use starter files, copy the starter files from {uri-dynamic-plugin-fe-starter-files}[Dynamic plugin wrapper for frontend - starter files] to an empty directory. If you do not want to use starter files, complete the following steps:
 
-* Create a starter package (_**not needed if using frontend starter files**_):
+. Create a starter package:
 [source, bash]
 ----
 yarn set version classic
@@ -41,14 +39,16 @@ yarn init
 # provide the values prompted
 ----
 
-* Create `src/index.ts` file with the following content (_**not needed if using frontend starter files**_):
+[start=2]
+. Create `src/index.ts` file with the following content:
 [source, yaml]
 ----
 # The dynamicPluginInstaller entry point must be exported in the main src/index.ts file:
 export * from '<THIRD_PARTY_PLUGIN>';
 ----
 
-* Create `app-config.yaml` file with the following content (_**not needed if using frontend starter files**_):
+[start=3]
+. Create `app-config.yaml` file with the following content:
 [source, yaml]
 ----
 app:
@@ -56,7 +56,8 @@ app:
 ----
 _This config is needed for export-dynamic command to work and a Jira is already open to have this requirement removed. Change the baseUrl to whatever value you prefer._
 
-* Modify `package.json` and add the following config if not already present in the file (_**not needed if using frontend starter files**_):
+[start=4]
+. Modify `package.json` and add the following config if not already present in the file:
 
 [source]
 ----
@@ -97,7 +98,7 @@ _You might need to add the devDependencies if `yarn export-dynamic` throws an er
 Module not found: Error: Can't resolve '<DEPENDENCY>' in ...
 ```
 
-_Once the dependency is added, please re-run `yarn install` before running `yarn export-dynamic`_
+_Once the dependency is added, re-run `yarn install` before running `yarn export-dynamic`_
 ====
 
 ==== Export the plugin for deploying to RHDH instance
@@ -137,15 +138,15 @@ yarn export-dynamic --dev    # <.>
 '''
 
 === Dynamic plugin wrapper for third-party backend plugin       [[wrapper_backend_plugin]]
-To create a dynamic plugin support to a third-party backend plugin, you'll need to either follow the steps given below:
+
+You can create dynamic plugin support for a third-party frontend plugin with or without starter files. If you want to use starter files, copy the starter files from {uri-dynamic-plugin-be-starter-files}[Dynamic plugin wrapper for backend - starter files] to an empty directory. If you do not want to use starter files, complete the following steps:
 
 [NOTE]
 ====
-. _You can take the starter files from {uri-dynamic-plugin-be-starter-files}[Dynamic plugin wrapper for backend - starter files] and copy them to an empty directory_
-. _**In order to wrap a third-party backend plugin, the backend plugin should support the new {uri-backstage-new-backend-system}[Backstage backend system]**_
+_**In order to wrap a third-party backend plugin, the backend plugin should support the new {uri-backstage-new-backend-system}[Backstage backend system]**_
 ====
 
-* Create a starter package (_**not needed if using backend starter files**_):
+. Create a starter package:
 [source, bash]
 ----
 yarn set version classic
@@ -153,14 +154,16 @@ yarn init
 # provide the values prompted
 ----
 
-* Create `src/index.ts` file with the following content (_**not needed if using backend starter files**_):
+[start=2]
+. Create `src/index.ts` file with the following content:
 [source, yaml]
 ----
 # The dynamicPluginInstaller entry point must be exported in the main src/index.ts file:
 export {default} from '<THIRD_PARTY_PLUGIN>';
 ----
 
-* Modify `package.json` and add the following config if not already present in the file (_**not needed if using backend starter files**_):
+[start=3]
+. Modify `package.json` and add the following config if not already present in the file:
 
 [source,options="nowrap"]
 ----
@@ -183,11 +186,11 @@ export {default} from '<THIRD_PARTY_PLUGIN>';
   }
 ----
 <1> add dependency for `@backstage/backend-dynamic-feature-service`
-<2> add `@janus-idp/cli` dependency, which provides a new, required, `export-dynamic-plugin` command. _Version `1.7.7` of the janus-cli is in tech-preview at the moment. If you're unsure of using this version then please use an older version, e.g. `1.4.7`_
+<2> add `@janus-idp/cli` dependency, which provides a new, required, `export-dynamic-plugin` command. _Version `1.7.7` of the janus-cli is in tech-preview at the moment. If you're unsure of using this version then use an older version, e.g. `1.4.7`_
 <3> add `dist-dynamic/*.*` to the package files list
 <4> add `dist-dynamic/dist/**` to the package files list
 <5> add `dist-dynamic/alpha/*` to the package files list
-<6> add `export-dynamic` to scripts. This will also embedd the dependencies as well as the third party package. _If using another version of janus-cli other than `1.7.7`, please remove the `--embed-as-dependencies` argument from `export-dynamic` script_
+<6> add `export-dynamic` to scripts. This will also embedd the dependencies as well as the third party package. _If using another version of janus-cli other than `1.7.7`, remove the `--embed-as-dependencies` argument from `export-dynamic` script_
   
 
 ==== Export the plugin for deploying to RHDH instance
@@ -237,8 +240,7 @@ To add dynamic plugin support to a third-party plugin, a wrapper plugin can be c
 
 == Test the dynamic plugin on OCP [[deploy_dynamic_plugins]]
 
-To test out the dynamic plugin (irrespective of whether it is a wrapper for third-party plugin or custom plugin), please
-follow the instructions given below.
+To test out the dynamic plugin (irrespective of whether it is a wrapper for third-party plugin or custom plugin), follow the instructions given below.
 
 === Create new app for plugin registry
 
@@ -305,7 +307,7 @@ data:
 
 === Refresh plugin registry    [[refresh_registry]]
 
-For any updates to this plugin, or if you add more dynamic plugins, please run the following command:
+For any updates to this plugin, or if you add more dynamic plugins, run the following command:
 
 [source,bash,options="nowrap"]
 ----
@@ -316,7 +318,7 @@ oc start-build plugin-registry --from-dir=$DYNAMIC_PLUGIN_ROOT_DIR --wait   # <.
 
 == Local testing configuration
 
-For testing the dynamic plugins locally, please follow the instructions given below.
+For testing the dynamic plugins locally, follow the instructions given below.
 
 Add the following config to `app-config.local.yaml` to allow dynamic plugins to be read and configured for local testing:
 
