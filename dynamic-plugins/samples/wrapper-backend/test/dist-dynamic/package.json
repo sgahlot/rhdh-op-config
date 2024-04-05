@@ -1,0 +1,32 @@
+{
+  "packageManager": "yarn@1.22.19",
+  "name": "test-backend-wrapper-dynamic",
+  "version": "0.1.0",
+  "description": "Wrapper for GitLab backend plugin",
+  "main": "./dist/index.cjs.js",
+  "author": "sgahlot",
+  "license": "Apache-2.0",
+  "backstage": {
+    "role": "backend-plugin"
+  },
+  "dependencies": {
+    "@spreadshirt/backstage-plugin-s3-viewer-backend": "^0.8.0"
+  },
+  "devDependencies": {},
+  "files": [
+    "dist"
+  ],
+  "scripts": {},
+  "bundleDependencies": true,
+  "peerDependencies": {
+    "@backstage/backend-dynamic-feature-service": "^0.1.0"
+  },
+  "overrides": {
+    "@aws-sdk/util-utf8-browser": {
+      "@smithy/util-utf8": "^2.0.0"
+    }
+  },
+  "resolutions": {
+    "@aws-sdk/util-utf8-browser": "npm:@smithy/util-utf8@~2"
+  }
+}

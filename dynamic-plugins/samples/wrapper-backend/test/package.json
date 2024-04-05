@@ -1,0 +1,33 @@
+{
+  "packageManager": "yarn@1.22.19",
+  "name": "test-backend-wrapper",
+  "version": "0.1.0",
+  "description": "Wrapper for GitLab backend plugin",
+  "main": "src/index.js",
+  "author": "sgahlot",
+  "license": "Apache-2.0",
+  "backstage": {
+    "role": "backend-plugin"
+  },
+  "dependencies": {
+    "@backstage/backend-dynamic-feature-service": "^0.1.0",
+    "@spreadshirt/backstage-plugin-s3-viewer-backend": "^0.8.0"
+  },
+  "devDependencies": {
+    "@backstage/cli": "0.23.1",
+    "@janus-idp/cli": "^1.7.7"
+  },
+  "files": [
+    "dist",
+    "dist-dynamic/*.*",
+    "dist-dynamic/dist/**",
+    "dist-dynamic/alpha/*"
+  ],
+  "scripts": {
+    "build": "backstage-cli package build",
+    "clean": "backstage-cli package clean",
+    "clean-dynamic-sources": "yarn clean && rm -Rf node_modules",
+    "export-dynamic": "janus-cli package export-dynamic-plugin --embed-as-dependencies --embed-package @spreadshirt/backstage-plugin-s3-viewer-backend"
+  }
+
+}

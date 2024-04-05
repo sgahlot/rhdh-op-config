@@ -2,12 +2,15 @@
   "packageManager": "yarn@1.22.19",
   "name": "<PACKAGE_NAME>-wrapper",
   "version": "0.1.0",
-  "description": "Wrapper for <3RD_PARTY_PLUGIN>",
+  "description": "Wrapper for <THIRD_PARTY_PLUGIN>",
   "main": "src/index.js",
   "author": "<AUTHOR>",
   "license": "Apache-2.0",
+  "backstage": {
+    "role": "frontend-plugin"
+  },
   "dependencies": {
-    "<3RD_PARTY_PLUGIN>": "<3RD_PARTY_PLUGIN_VERSION>",
+    "<THIRD_PARTY_PLUGIN>": "<THIRD_PARTY_PLUGIN_VERSION>",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },

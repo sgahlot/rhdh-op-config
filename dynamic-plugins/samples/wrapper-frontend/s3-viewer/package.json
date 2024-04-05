@@ -1,0 +1,32 @@
+{
+  "packageManager": "yarn@1.22.19",
+  "name": "test-s3-viewer-wrapper",
+  "version": "0.1.0",
+  "description": "Wrapper for s3-viewer frontend plugin",
+  "main": "src/index.js",
+  "author": "sgahlot",
+  "license": "Apache-2.0",
+  "backstage": {
+    "role": "frontend-plugin"
+  },
+  "dependencies": {
+    "@spreadshirt/backstage-plugin-s3-viewer": "0.5.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@backstage/cli": "0.23.1",
+    "@janus-idp/cli": "^1.7.7"
+  },
+  "files": [
+    "dist",
+    "dist-scalprum"
+  ],
+  "scripts": {
+    "build": "backstage-cli package build",
+    "clean": "backstage-cli package clean",
+    "clean-dynamic-sources": "yarn clean && rm -Rf node_modules",
+    "export-dynamic": "janus-cli package export-dynamic-plugin"
+  }
+
+}
