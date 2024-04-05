@@ -7,6 +7,7 @@
 :url-dynamic-plugins: https://github.com/janus-idp/backstage-showcase/blob/main/showcase-docs/dynamic-plugins.md#frontend-layout-configuration
 :uri-dynamic-plugin-fe-starter-files: https://github.com/sgahlot/rhdh-op-config/tree/main/dynamic-plugins/starters/frontend-wrapper-starter
 :uri-dynamic-plugin-be-starter-files: https://github.com/sgahlot/rhdh-op-config/tree/main/dynamic-plugins/starters/backend-wrapper-starter
+:uri-backstage-new-backend-system: https://backstage.io/docs/plugins/new-backend-system/
 
 Documentation for creating and testing dynamic plugins. It provides instructions on configuring the dynamic plugins on OCP as well as testing them in your local Janus-IDP showcase instance.
 
@@ -131,7 +132,13 @@ yarn export-dynamic --dev    # <.>
 '''
 
 === Dynamic plugin wrapper for third-party backend plugin       [[wrapper_backend_plugin]]
-To create a dynamic plugin support to a third-party backend plugin, you'll need to either follow the steps given below, or you can take the starter files from {uri-dynamic-plugin-be-starter-files}[Dynamic plugin wrapper for backend - starter files] and copy them to an empty directory:
+To create a dynamic plugin support to a third-party backend plugin, you'll need to either follow the steps given below:
+
+[NOTE]
+====
+. _You can take the starter files from {uri-dynamic-plugin-be-starter-files}[Dynamic plugin wrapper for backend - starter files] and copy them to an empty directory_
+. _**In order to wrap a third-party backend plugin, the backend plugin should support the new {uri-backstage-new-backend-system}[Backstage backend system]**_
+====
 
 * Create a starter package (_**not needed if using backend starter files**_):
 [source, bash]
@@ -337,3 +344,4 @@ Configuration for most of the backend plugins will go in the above config yaml b
 == References
 
 * {url-dynamic-plugins}[RHDH - Dynamic plugin doc] +
+* {uri-backstage-new-backend-system}[Backstage new backend system] +
