@@ -20,7 +20,7 @@ To add dynamic plugin support to a third-party plugin, a wrapper plugin can be c
 * Create a starter package
 * import the third-party plugin as a dependency
 * Modify `package.json`
-* Modify `src/dynamic/index.ts`
+* Modify `src/index.ts`
 * Export the third-party plugin as a dynamic plugin
 
 The wrapper plugin can be used to add dynamic support to either a frontend or backend plugin. There are small differences between wrapping the two.
@@ -90,10 +90,15 @@ _This config is needed for export-dynamic command to work and a Jira is already 
 <5> add `dist-scalprum` to the package files list
 <6> add `export-dynamic` to scripts
 
-You might need to add the devDependencies if `yarn export-dynamic` throws an error like given below:
+[NOTE]
+====
+_You might need to add the devDependencies if `yarn export-dynamic` throws an error like given below:_
 ```
 Module not found: Error: Can't resolve '<DEPENDENCY>' in ...
 ```
+
+_Once the dependency is added, please re-run `yarn install` before running `yarn export-dynamic`_
+====
 
 ==== Export the plugin for deploying to RHDH instance
 

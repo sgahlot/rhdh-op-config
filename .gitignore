@@ -1,6 +1,7 @@
 .env
 .yarn
 .DS_Store
+yarn.lock
 **/*.swp
 /BAK/*
 /repos/*
