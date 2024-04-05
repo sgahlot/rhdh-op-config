@@ -27,7 +27,10 @@ The wrapper plugin can be used to add dynamic support to either a frontend or ba
 '''
 
 === Dynamic plugin wrapper for third-party frontend plugin   [[wrapper_frontend_plugin]]
-To create a dynamic plugin support to a third-party frontend plugin, you'll need to either follow the steps given below, or you can take the starter files from {uri-dynamic-plugin-fe-starter-files}[Dynamic plugin wrapper for frontend - starter files] and copy them to an empty directory:
+To create a dynamic plugin support to a third-party frontend plugin, you'll need to either follow the steps given below:
+
+[NOTE]
+_You can take the starter files from {uri-dynamic-plugin-fe-starter-files}[Dynamic plugin wrapper for frontend - starter files] and copy them to an empty directory_
 
 * Create a starter package (_**not needed if using frontend starter files**_):
 [source, bash]
@@ -50,11 +53,11 @@ export * from '<THIRD_PARTY_PLUGIN>';
 app:
   baseUrl: "https://bogussite.com"
 ----
-_This is needed for export-dynamic command to work and a Jira is already open to have this requirement removed. Change the baseUrl to whatever value you prefer._
+_This config is needed for export-dynamic command to work and a Jira is already open to have this requirement removed. Change the baseUrl to whatever value you prefer._
 
 * Modify `package.json` and add the following config if not already present in the file (_**not needed if using frontend starter files**_):
 
-[source, json]
+[source]
 ----
   "backstage": {
     "role": "frontend-plugin"
@@ -145,9 +148,9 @@ yarn init
 export {default} from '<THIRD_PARTY_PLUGIN>';
 ----
 
-* Modify `package.json` and add the following config if not already present in the file (_**not needed if using frontend starter files**_):
+* Modify `package.json` and add the following config if not already present in the file (_**not needed if using backend starter files**_):
 
-[source,json,options="nowrap"]
+[source,options="nowrap"]
 ----
   "dependencies": {
     "@backstage/backend-dynamic-feature-service": "0.1.0",              # <.>
@@ -240,7 +243,12 @@ oc new-app --image-stream=plugin-registry                                   # <.
 <2> Starts a new build for plugin-registry using the `DYNAMIC_PLUGIN_ROOT_DIR` dir as the source. _The `DYNAMIC_PLUGIN_ROOT_DIR` env variable should be set before running this command_
 <3> Creates a new app using the plugin-registry build
 
-_You can set an  env var `SKIP_INTEGRITY_CHECK: true` if you prefer to not use the integrity hash, or want to quickly test changes in your plugin. If this env variable is set, then you can skip setting the `integrity` for the dynamic plugin_
+[NOTE]
+.During testing
+====
+. _You can set an environment variable `SKIP_INTEGRITY_CHECK=true` if you prefer to not use the integrity hash, or want to quickly test changes in your plugin._
+. _Setting `integrity` for the dynamic plugin can be skipped once this environment variable is set_
+====
 
 
 '''
@@ -265,7 +273,7 @@ data:
         integrity: '<INTEGRITY_HASH_VALUE_FROM_npm_pack_command>'                   # <.>
         pluginConfig:
           dynamicPlugins:
-            frontend:
+            frontend:                                                               # <.>
               <NAME_OF_YOUR_DYNAMIC_PLUGIN>:                                        # <.>
                 dynamicRoutes:
                   - importName: <THIRD_PARTY_COMPONENT>                             # <.>
@@ -275,10 +283,11 @@ data:
 ----
 <1> tgz file name that was created with `npm pack` command (prefixed with `http://plugin-registry:8080` - this is where our plugin-registry app is running)
 <2> Integrity hash generated from `npm pack` output
-<3> Name of the wrapper plugin
-<4> Component name of the third party plugin. Defauls to the `export` in index.ts
-<5> Sidebar menu item text
-<6> Unique path in the app
+<3> Configuration for the third-party frontned plugin
+<4> Name of the wrapper plugin
+<5> Component name of the third party plugin. Defauls to the `export` in index.ts
+<6> Sidebar menu item text
+<7> Unique path in the app
 
 '''
 
