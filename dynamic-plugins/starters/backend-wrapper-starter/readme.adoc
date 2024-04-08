@@ -15,6 +15,15 @@ The script `setup-backend.sh` can be run without any arguments to see its usage.
 
 * Copy `src/index.ts.template` to `src/index.ts`
 * Replace the `THIRD_PARTY_PLUGIN_WITH_SCOPE` in `src/index.ts` with correct third-party plugin
+
+[NOTE]
+.Use of default
+====
+* Check the third-party plugin code to see if you need to use `alpha.ts` or `index.ts`, with index.ts being implicit export
+* No change is required if the `src/index.ts` in the third-party backend plugin exports `default`, but if there is no `export default` in the `index.ts` you will have to use `alpha.ts` instead.
+** Use `export {default} from 'THIRD_PARTY_PACKAGE/alpha'` instead of `export {default} from 'THIRD_PARTY_PACKAGE'` in such a case
+====
+
 * Copy `package.json.template` to `package.json`
 * Replace the following with correct values, in `package.json`:
 
