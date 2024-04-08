@@ -1,33 +1,28 @@
 {
   "packageManager": "yarn@1.22.19",
-  "name": "<PACKAGE_NAME>-wrapper",
+  "name": "@THIRD_PARTY_PLUGIN_WITHOUT_SCOPE@-wrapper",
   "version": "0.1.0",
-  "description": "Wrapper for <THIRD_PARTY_PLUGIN>",
+  "description": "Wrapper for @THIRD_PARTY_PLUGIN_SHORT_NAME@ backend plugin",
   "main": "src/index.js",
-  "author": "<AUTHOR>",
+  "author": "@AUTHOR@",
   "license": "Apache-2.0",
   "backstage": {
     "role": "backend-plugin"
   },
   "dependencies": {
-    "@backstage/backend-dynamic-feature-service": "^0.1.0",
-    "<THIRD_PARTY_PLUGIN>": "<THIRD_PARTY_PLUGIN_VERSION>"
+    "@THIRD_PARTY_PLUGIN_WITH_SCOPE@": "@THIRD_PARTY_PLUGIN_VERSION@"
   },
   "devDependencies": {
     "@backstage/cli": "0.23.1",
     "@janus-idp/cli": "^1.7.7"
   },
   "files": [
-    "dist",
-    "dist-dynamic/*.*",
-    "dist-dynamic/dist/**",
-    "dist-dynamic/alpha/*"
+    "dist"
   ],
   "scripts": {
     "build": "backstage-cli package build",
     "clean": "backstage-cli package clean",
-    "clean-dynamic-sources": "yarn clean && rm -Rf node_modules dist-dynamic",
-    "export-dynamic": "janus-cli package export-dynamic-plugin --embed-as-dependencies --embed-package <THIRD_PARTY_PLUGIN>"
+    "clean-dynamic-sources": "yarn clean && rm -Rf node_modules dist-types dist-dynamic",
+    "export-dynamic": "janus-cli package export-dynamic-plugin --embed-as-dependencies --embed-package @THIRD_PARTY_PLUGIN_WITH_SCOPE@"
   }
-
 }

@@ -7,34 +7,37 @@ This directory contains starter files to create a dynamic plugin wrapper for thi
 
 == Plugin wrapper for backend plugin
 
-To create a dynamic plugin wrapper for third-party backend plugin, please follow these stpes:
+To create a dynamic plugin wrapper for third-party backend plugin, copy the files and directories from this direcoty to an empty directory, and either run `../setup-backend.sh` or follow these stpes to change the files in the new directory:
 
-* Replace the `<THIRD_PARTY_PLUGIN>` in `src/index.ts` with correct third-party plugin
+[NOTE]
+The script `../setup-backend.sh` can be run without any arguments to see its usage.
+
+* Copy `src/index.ts.template` to `src/index.ts`
+* Replace the `THIRD_PARTY_PLUGIN_WITH_SCOPE` in `src/index.ts` with correct third-party plugin
 * Copy `package.json.template` to `package.json`
 * Replace the following with correct values, in `package.json`:
 
-[source,json,options="nowrap"]
+[source,options="nowrap"]
 ----
-  "name": "<PACKAGE_NAME>-wrapper",                             # <.>
-  "description": "Wrapper for <THIRD_PARTY_PLUGIN>",            # <.>
-  "author": "<AUTHOR>",                                         # <.>
+  "name": "@THIRD_PARTY_PLUGIN_WITHOUT_SCOPE@-wrapper",                         # <.>
+  "description": "Wrapper for @THIRD_PARTY_PLUGIN_SHORT_NAME@ backend plugin",  # <.>
+  "author": "@AUTHOR@",                                                         # <.>
   "dependencies":
-    ...
-    "<THIRD_PARTY_PLUGIN>": "<THIRD_PARTY_PLUGIN_VERSION>",     # <.>
+    "@THIRD_PARTY_PLUGIN_WITH_SCOPE@": "@THIRD_PARTY_PLUGIN_VERSION@"           # <.>
   "devDependencies": {
     "@backstage/cli": "0.23.1",
-    "@janus-idp/cli": "^1.7.7"                                  # <.>
+    "@janus-idp/cli": "^1.7.7"                                                  # <.>
   },
   ...
   "scripts":
     ...
-    "export-dynamic": "janus-cli package export-dynamic-plugin --embed-as-dependencies --embed-package <THIRD_PARTY_PLUGIN>"  # <.>
+    "export-dynamic": "janus-cli package export-dynamic-plugin --embed-as-dependencies --embed-package @THIRD_PARTY_PLUGIN_WITH_SCOPE@"  # <.>
 ----
-<1> Replace with your plugin name
-<2> Replace with correct description for your plugin
+<1> Replace with your wrapper plugin name
+<2> Replace with correct description for your wrapper plugin
 <3> Replace with correct author name
 <4> Replace with the third-party plugin and its version
-<5> Version `1.7.7` of the janus-cli is in tech-preview at the moment. _If you're unsure of using this version then please use an older version, e.g. `1.4.7`_
-<6> Replace with the third-party plugin. _If using another version of janus-cli other than `1.7.7`, please remove the `--embed-as-dependencies` argument from `export-dynamic` script_
+<5> Version `1.7.7` of the janus-cli is in tech-preview at the moment. _If you're unsure of using this version then use an older version, e.g. `1.4.7`_
+<6> Replace with the third-party plugin. _If using another version of janus-cli other than `1.7.7`, remove the `--embed-as-dependencies` argument from `export-dynamic` script_
 
-Once the above changes are complete, please follow the instructions in {uri-dynamic-plugin-readme}[Dynamic Plugins readme] to complete the configuration and installation of this dynamic plugin wrapper.
+Once the above changes are complete, follow the instructions in {uri-dynamic-plugin-readme}[Dynamic Plugins readme] to complete the configuration and installation of this dynamic plugin wrapper.
