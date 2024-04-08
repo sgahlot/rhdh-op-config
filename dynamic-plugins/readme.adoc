@@ -175,30 +175,21 @@ export {default} from '<THIRD_PARTY_PLUGIN>';
 
 [source,options="nowrap"]
 ----
-  "dependencies": {
-    "@backstage/backend-dynamic-feature-service": "0.1.0",              # <.>
-  }
   "devDependencies": {
-    "@janus-idp/cli": "^1.7.7"                                          # <.>
+    "@janus-idp/cli": "^1.7.7"                          # <.>
   },
   "files": [
-    "dist-dynamic/*.*",                                                 # <.>
-    "dist-dynamic/dist/**",                                             # <.>
-    "dist-dynamic/alpha/*"                                              # <.>
+    "dist"                                              # <.>
   ],
   "scripts": {
     "build": "backstage-cli package build",
     "clean": "backstage-cli package clean",
-    "clean-dynamic-sources": "yarn clean && rm -Rf node_modules dist-dynamic",
     "export-dynamic": "janus-cli package export-dynamic-plugin --embed-as-dependencies --embed-package <THIRD_PARTY_PLUGIN>"   # <.>
   }
 ----
-<1> add dependency for `@backstage/backend-dynamic-feature-service`
-<2> add `@janus-idp/cli` dependency, which provides a new, required, `export-dynamic-plugin` command. _Version `1.7.7` of the janus-cli is in tech-preview at the moment. If you're unsure of using this version then use an older version, e.g. `1.4.7`_
-<3> add `dist-dynamic/*.*` to the package files list
-<4> add `dist-dynamic/dist/**` to the package files list
-<5> add `dist-dynamic/alpha/*` to the package files list
-<6> add `export-dynamic` to scripts. This will also embedd the dependencies as well as the third party package. _If using another version of janus-cli other than `1.7.7`, remove the `--embed-as-dependencies` argument from `export-dynamic` script_
+<1> add `@janus-idp/cli` dependency, which provides a new, required, `export-dynamic-plugin` command. _Version `1.7.7` of the janus-cli is in tech-preview at the moment. If you're unsure of using this version then use an older version, e.g. `1.4.7`_
+<2> add `dist` to the package files list
+<3> add `export-dynamic` to scripts. This will also embedd the dependencies as well as the third party package. _If using another version of janus-cli other than `1.7.7`, remove the `--embed-as-dependencies` argument from `export-dynamic` script_
   
 
 ==== Export the plugin for deploying to RHDH instance
