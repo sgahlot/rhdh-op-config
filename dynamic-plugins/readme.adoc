@@ -281,20 +281,20 @@ data:
       - dynamic-plugins.default.yaml
     plugins:
       <EXISTING_DYNAMIC_PLUGINS>
-      - package: 'http://plugin-registry:8080/<NAME_OF_YOUR_DYNAMIC_PLUGIN>.tgz'    # <.>
+      - package: 'http://plugin-registry:8080/<NAME_OF_YOUR_DYNAMIC_PLUGIN_N_VERSION>.tgz'    # <.>
         disabled: false
-        integrity: '<INTEGRITY_HASH_VALUE_FROM_npm_pack_command>'                   # <.>
+        integrity: '<INTEGRITY_HASH_VALUE_FROM_npm_pack_command>'                             # <.>
         pluginConfig:
           dynamicPlugins:
-            frontend:                                                               # <.>
-              <NAME_OF_YOUR_DYNAMIC_PLUGIN>:                                        # <.>
+            frontend:                                                                         # <.>
+              <NAME_OF_YOUR_DYNAMIC_PLUGIN>:                                                  # <.>
                 dynamicRoutes:
-                  - importName: <THIRD_PARTY_COMPONENT>                             # <.>
+                  - importName: <THIRD_PARTY_COMPONENT>                                       # <.>
                     menuItem:
-                      text: <THIRD_PARTY_>                                          # <.>
-                    path: /<UNIQUE_PATH>                                            # <.>
+                      text: <THIRD_PARTY_>                                                    # <.>
+                    path: /<UNIQUE_PATH>                                                      # <.>
 ----
-<1> tgz file name that was created with `npm pack` command (prefixed with `http://plugin-registry:8080` - this is where our plugin-registry app is running)
+<1> <WrapperPluginName>-<WrapperPluginVersion>.tgz - file name that was created with `npm pack` command (prefixed with `http://plugin-registry:8080` - this is where our plugin-registry app is running)
 <2> Integrity hash generated from `npm pack` output
 <3> Configuration for the third-party frontned plugin
 <4> Name of the wrapper plugin

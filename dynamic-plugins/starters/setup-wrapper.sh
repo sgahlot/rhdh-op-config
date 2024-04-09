@@ -6,6 +6,8 @@
 #
 # Also creates "src/index.ts" from "src/index.ts.template" correctly replacing
 # the third-party plugin
+#
+# author: sgahlot
 #============================================================================
 
 
@@ -111,7 +113,9 @@ function USAGE() {
         -n <Plugin Name with scope>
         -v <Plugin version>
 
-    Example: $0 -a someAuthor -w "adr-backend" -s adr -n "@backstage/plugin-adr-backend" -v "0.4.14-next.0
+    Examples:
+      $0 -a someAuthor -w "adr" -s adr -n "@backstage/plugin-adr" -v "0.4.14-next.0
+      $0 -a someAuthor -w "adr-backend" -s adr -n "@backstage/plugin-adr-backend" -v "0.4.14-next.0
 
     Exiting!!!
 

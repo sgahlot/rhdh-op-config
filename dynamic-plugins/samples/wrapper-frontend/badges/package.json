@@ -1,10 +1,10 @@
 {
   "packageManager": "yarn@1.22.19",
-  "name": "@THIRD_PARTY_PLUGIN_WITHOUT_SCOPE@-wrapper",
+  "name": "badges-frontend-wrapper",
   "version": "0.1.0",
-  "description": "Wrapper for @THIRD_PARTY_PLUGIN_SHORT_NAME@ frontend plugin",
+  "description": "Wrapper for badges frontend plugin",
   "main": "src/index.js",
-  "author": "@AUTHOR@",
+  "author": "sgahlot",
   "license": "Apache-2.0",
   "backstage": {
     "role": "frontend-plugin"
@@ -12,11 +12,12 @@
   "dependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "@THIRD_PARTY_PLUGIN_WITH_SCOPE@": "@THIRD_PARTY_PLUGIN_VERSION@"
+    "@backstage/plugin-badges": "0.2.58-next.0"
   },
   "devDependencies": {
     "@backstage/cli": "0.23.1",
-    "@janus-idp/cli": "^1.7.7"
+    "@janus-idp/cli": "^1.7.7",
+    "react-router-dom": "6.0.0-beta.0 || ^6.3.0"
   },
   "files": [
     "dist",
