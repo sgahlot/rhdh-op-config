@@ -3,7 +3,7 @@
 This directory contains starter files to create a dynamic plugin wrapper for third-party frontend plugin
 
 :icons: font
-:uri-dynamic-plugin-readme: https://github.com/sgahlot/rhdh-op-config/blob/main/dynamic-plugins/readme.adoc#wrapper_frontend_plugin
+:uri-dynamic-plugin-readme: https://github.com/sgahlot/rhdh-op-config/blob/main/dynamic-plugins/readme.adoc#export_frontend_plugin
 :uri-setup-script: https://github.com/sgahlot/rhdh-op-config/tree/main/dynamic-plugins/starters/setup-wrapper.sh
 
 == Plugin wrapper for frontend plugin

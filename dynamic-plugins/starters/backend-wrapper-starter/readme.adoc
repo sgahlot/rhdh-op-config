@@ -3,8 +3,9 @@
 This directory contains starter files to create a dynamic plugin wrapper for third-party backend plugin
 
 :icons: font
-:uri-dynamic-plugin-readme: https://github.com/sgahlot/rhdh-op-config/blob/main/dynamic-plugins/readme.adoc#wrapper_backend_plugin
+:uri-dynamic-plugin-readme: https://github.com/sgahlot/rhdh-op-config/blob/main/dynamic-plugins/readme.adoc#export_backend_plugin
 :uri-setup-script: https://github.com/sgahlot/rhdh-op-config/tree/main/dynamic-plugins/starters/setup-wrapper.sh
+:uri-backstage-new-backend-system: https://backstage.io/docs/plugins/new-backend-system/
 
 == Plugin wrapper for backend plugin
 
@@ -36,7 +37,7 @@ The script `setup-backend.sh` can be run without any arguments to see its usage.
     "@THIRD_PARTY_PLUGIN_WITH_SCOPE@": "@THIRD_PARTY_PLUGIN_VERSION@"           # <.>
   "devDependencies": {
     "@backstage/cli": "0.23.1",
-    "@janus-idp/cli": "^1.7.7"                                                  # <.>
+    "@janus-idp/cli": "^1.7.9"                                                  # <.>
   },
   ...
   "scripts":
@@ -47,7 +48,13 @@ The script `setup-backend.sh` can be run without any arguments to see its usage.
 <2> Replace with correct description for your wrapper plugin
 <3> Replace with correct author name
 <4> Replace with the third-party plugin and its version
-<5> Version `1.7.7` of the janus-cli is in tech-preview at the moment. _If you're unsure of using this version then use an older version, e.g. `1.4.7`_
-<6> Replace with the third-party plugin. _If using another version of janus-cli other than `1.7.7`, remove the `--embed-as-dependencies` argument from `export-dynamic` script_
+<5> Version `1.7.9` of the janus-cli is in tech-preview at the moment
+<6> Replace with the third-party plugin
 
 Once the above changes are complete, follow the instructions in {uri-dynamic-plugin-readme}[Dynamic Plugins readme] to complete the configuration and installation of this dynamic plugin wrapper.
+
+
+[NOTE]
+====
+_**In order to wrap a third-party backend plugin, the backend plugin should support the new {uri-backstage-new-backend-system}[Backstage backend system]**_
+====

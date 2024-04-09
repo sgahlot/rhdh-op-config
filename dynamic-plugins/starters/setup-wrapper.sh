@@ -109,13 +109,18 @@ function USAGE() {
     where args are:
         -a <Author>
         -w <Plugin Name without scope>
+            Will be part of wrapper plugin name, e.g. adr, bazaar, awesome-plugin
+            Must be lowercase and may contain hyphens and underscores
         -s <Plugin short name>
+            will be part of wrapper plugin description, e.g. ADR, Bazaar, Awesome Plugin
         -n <Plugin Name with scope>
+            Third-party plugin with scope, e.g. "@backstage/plugin-adr"
         -v <Plugin version>
+            Third-party plugin version, e.g. "0.6.17-next.0"
 
     Examples:
-      $0 -a someAuthor -w "adr" -s adr -n "@backstage/plugin-adr" -v "0.4.14-next.0
-      $0 -a someAuthor -w "adr-backend" -s adr -n "@backstage/plugin-adr-backend" -v "0.4.14-next.0
+      $0 -a someAuthor -w "adr" -s adr -n "@backstage/plugin-adr" -v "0.6.17-next.0"
+      $0 -a someAuthor -w "adr-backend" -s adr -n "@backstage/plugin-adr-backend" -v "0.4.14-next.0"
 
     Exiting!!!
 
