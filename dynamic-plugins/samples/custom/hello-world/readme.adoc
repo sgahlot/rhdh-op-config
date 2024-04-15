@@ -1,0 +1,35 @@
+= Dynamic custom frontend plugin - hello-world
+:icons: font
+:uri-app-config: https://github.com/sgahlot/rhdh-op-config/blob/main/dynamic-plugins/samples/hello-world/app-config-hello-world.yaml
+:uri-rhdh-testing: https://github.com/sgahlot/rhdh-op-config/blob/main/dynamic-plugins/readme.adoc#export_frontend_custom_plugin
+:uri-local-testing: https://github.com/sgahlot/rhdh-op-config/blob/main/dynamic-plugins/readme.adoc#run_local_frontend_custom_plugin
+
+
+Welcome to the hello-world plugin! It has been converted to a dynamic plugin by making the necessary changes to the `package.json`
+
+_This plugin was created through the Backstage CLI_
+
+== Getting started
+
+To test this plugin, add the contents of {uri-app-config}[hello-world app config] to a configMap used by RHDH instance (or to your app-config.local.yaml for local Janus testing):
+
+[source="yaml",options="nowrap"]
+----
+dynamicPlugins:
+  rootDirectory: dynamic-plugins-root
+  frontend:
+    internal.backstage-plugin-hello-world:
+      dynamicRoutes:
+        - importName: HelloWorldPage
+          menuItem:
+            text: "Hello World"
+          path: /hello-world
+----
+
+Follow the steps given below to test this plugin in RHDH instance or in local Janus intance:
+
+* RHDH instance
+** To export and test the plugin in RHDH instance, follow {uri-rhdh-testing}[these instructions]
+
+* Local Janus intance
+** To export and test the plugin in local Janus instance, follow {uri-local-testing}[these instructions]

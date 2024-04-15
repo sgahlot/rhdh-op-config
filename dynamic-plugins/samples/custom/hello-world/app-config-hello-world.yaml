@@ -1,0 +1,9 @@
+dynamicPlugins:
+  rootDirectory: dynamic-plugins-root
+  frontend:
+    internal.backstage-plugin-hello-world:
+      dynamicRoutes:
+        - importName: HelloWorldPage
+          menuItem:
+            text: "Hello World"
+          path: /hello-world

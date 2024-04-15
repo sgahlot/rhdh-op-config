@@ -5,7 +5,7 @@ This directory contains files to create a dynamic plugin wrapper for the ADR plu
 :icons: font
 :uri-adr: https://github.com/backstage/backstage/tree/master/plugins/adr
 :uri-adr-backend: https://github.com/backstage/backstage/blob/master/plugins/adr-backend/README.md
-:uri-app-config: https://github.com/sgahlot/rhdh-op-config/blob/main/dynamic-plugins/samples/wrapper-frontend/adr/app-config.yaml
+:uri-app-config: https://github.com/sgahlot/rhdh-op-config/blob/main/dynamic-plugins/samples/wrapper-frontend/adr/app-config-adr.yaml
 
 == Steps
 

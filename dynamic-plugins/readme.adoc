@@ -27,7 +27,7 @@ npx @backstage/create-app@0.5.11
 ====
 _RHDH 1.1 is based on backstage version `1.23.4`, which uses `0.5.11` of create-app._
 
-Steps needed to convert a custom plugin to dynamic as well as create wrapper for any third-party plugin will be performed in the backstage app 
+_**Steps needed to convert a custom plugin to dynamic as well as create wrapper for any third-party plugin will be performed in the backstage app**_
 ====
 
 [start=2]
@@ -311,7 +311,7 @@ ls -l $DYNAMIC_PLUGIN_ROOT_DIR                                          # <.>
 
 Deploy this dynamic plugin in OpenShift, as well as reference it in RHDH, by following the instructions at <<deploy_dynamic_plugins>>
 
-==== Export the plugin for deploying to local Janus instance
+==== Export the plugin for deploying to local Janus instance    [[custom_frontend_plugin_local_run]]
 
 To deploy the dynamic plugin wrapper in the Janus instance running locally, run the following commands in your frontned custom plugin directory:
 [source, bash]
@@ -319,6 +319,8 @@ To deploy the dynamic plugin wrapper in the Janus instance running locally, run 
 export LOCAL_DYNAMIC_PLUGIN_ROOT_DIR=<JANUS_SHOWCASE_DIR>/dynamic-plugins-root    # <.>
 yarn install
 yarn export-dynamic --dev --dynamic-plugins-root $LOCAL_DYNAMIC_PLUGIN_ROOT_DIR   # <.>
+
+ls -l $LOCAL_DYNAMIC_PLUGIN_ROOT_DIR
 ----
 <1> Environment variable to point to the local dynamic-plugin-root directory that should be in the Janus Showcase root directory
 <2> export the plugin as a dynamic plugin and create a symbolic link to it in the `dynamic-plugins-root` directory in your showcase directory to be able to run/test it locally

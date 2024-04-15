@@ -9,3 +9,4 @@ dist-scalprum
 node_modules
 dist-dynamic
 dist
+build
