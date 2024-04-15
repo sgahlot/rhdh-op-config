@@ -1,6 +1,6 @@
 = Dynamic custom frontend plugin - hello-world
 :icons: font
-:uri-app-config: https://github.com/sgahlot/rhdh-op-config/blob/main/dynamic-plugins/samples/hello-world/app-config-hello-world.yaml
+:uri-app-config: https://github.com/sgahlot/rhdh-op-config/blob/main/dynamic-plugins/samples/custom/hello-world/app-config-hello-world.yaml
 :uri-rhdh-testing: https://github.com/sgahlot/rhdh-op-config/blob/main/dynamic-plugins/readme.adoc#export_frontend_custom_plugin
 :uri-local-testing: https://github.com/sgahlot/rhdh-op-config/blob/main/dynamic-plugins/readme.adoc#run_local_frontend_custom_plugin
 
