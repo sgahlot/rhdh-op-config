@@ -20,10 +20,9 @@ The script `setup-backend.sh` can be run without any arguments to see its usage.
 [NOTE]
 .Use of default
 ====
-* The new backend system standard entrypoint (created using createBackendPlugin() or createBackendModule()) should be exported as the default export of either the main package or of an alpha package (if the new backend support is still provided as alpha APIs)
-** Check the third-party plugin code to see if you need to use `alpha.ts` or `index.ts`, with index.ts being implicit export
-** No change is required if the `src/index.ts` in the third-party backend plugin exports `default`, but if there is no `export default` in the `index.ts` you will have to use `alpha.ts` instead.
-*** Use `export {default} from 'THIRD_PARTY_PACKAGE/alpha'` instead of `export {default} from 'THIRD_PARTY_PACKAGE'` in such a case
+* Check the third-party plugin code to see if you need to use `alpha.ts` or `index.ts`, with index.ts being implicit export
+* No change is required if the `src/index.ts` in the third-party backend plugin exports `default`, but if there is no `export default` in the `index.ts` you will have to use `alpha.ts` instead.
+** Use `export {default} from 'THIRD_PARTY_PACKAGE/alpha'` instead of `export {default} from 'THIRD_PARTY_PACKAGE'` in such a case
 ====
 
 * Copy `package.json.template` to `package.json`

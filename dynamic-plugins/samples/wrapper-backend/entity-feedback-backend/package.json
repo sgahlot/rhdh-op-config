@@ -10,7 +10,7 @@
     "role": "backend-plugin"
   },
   "dependencies": {
-    "@backstage/plugin-entity-feedback-backend": "0.2.14-next.0"
+    "@backstage/plugin-entity-feedback-backend": "0.2.10"
   },
   "devDependencies": {
     "@backstage/cli": "0.23.1",

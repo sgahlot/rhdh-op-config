@@ -12,7 +12,7 @@
   "dependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "@backstage/plugin-bazaar": "0.2.26-next.0"
+    "@backstage/plugin-bazaar": "0.2.22"
   },
   "devDependencies": {
     "@backstage/cli": "0.23.1",

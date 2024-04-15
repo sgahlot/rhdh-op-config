@@ -1,6 +1,6 @@
 {
   "packageManager": "yarn@1.22.19",
-  "name": "test-todo-plugin-wrapper",
+  "name": "todo-plugin-wrapper",
   "version": "0.1.0",
   "description": "Wrapper for todo-plugin-frontend",
   "main": "src/index.js",
@@ -10,7 +10,7 @@
     "role": "frontend-plugin"
   },
   "dependencies": {
-    "@backstage/plugin-todo": "0.2.38-next.0",
+    "@backstage/plugin-todo": "0.2.34",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },

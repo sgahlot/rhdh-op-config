@@ -1,8 +1,8 @@
 {
   "packageManager": "yarn@1.22.19",
-  "name": "adr-backend-plugin-wrapper",
+  "name": "todo-wrapper",
   "version": "0.1.0",
-  "description": "Wrapper for adr backend plugin",
+  "description": "Wrapper for TODO backend plugin",
   "main": "src/index.js",
   "author": "sgahlot",
   "license": "Apache-2.0",
@@ -10,11 +10,11 @@
     "role": "backend-plugin"
   },
   "dependencies": {
-    "@backstage/plugin-adr-backend": "0.4.10"
+    "@backstage/plugin-todo-backend": "0.3.11"
   },
   "devDependencies": {
     "@backstage/cli": "0.23.1",
-    "@janus-idp/cli": "^1.7.10"
+    "@janus-idp/cli": "^1.7.7"
   },
   "files": [
     "dist"
@@ -22,7 +22,7 @@
   "scripts": {
     "build": "backstage-cli package build",
     "clean": "backstage-cli package clean",
-    "export-dynamic": "janus-cli package export-dynamic-plugin --embed-as-dependencies --embed-package @backstage/plugin-adr-backend"
+    "clean-dynamic-sources": "yarn clean && rm -Rf node_modules dist-types dist-dynamic",
+    "export-dynamic": "janus-cli package export-dynamic-plugin --embed-as-dependencies --embed-package @backstage/plugin-todo-backend"
   }
-
 }

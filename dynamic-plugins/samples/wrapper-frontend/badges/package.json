@@ -12,12 +12,12 @@
   "dependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "@backstage/plugin-badges": "0.2.58-next.0"
+    "@backstage/plugin-badges": "0.2.54"
   },
   "devDependencies": {
     "@backstage/cli": "0.23.1",
     "@janus-idp/cli": "^1.7.7",
-    "react-router-dom": "6.0.0-beta.0 || ^6.3.0"
+    "react-router-dom": "^6.3.0"
   },
   "files": [
     "dist",

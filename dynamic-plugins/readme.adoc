@@ -4,15 +4,39 @@
 :toc:
 :toclevels: 5
 
-:url-dynamic-plugins: https://github.com/janus-idp/backstage-showcase/blob/main/showcase-docs/dynamic-plugins.md#frontend-layout-configuration
+:uri-dynamic-plugins: https://github.com/janus-idp/backstage-showcase/blob/main/showcase-docs/dynamic-plugins.md#frontend-layout-configuration
 :uri-dynamic-plugin-fe-starter-files: https://github.com/sgahlot/rhdh-op-config/tree/main/dynamic-plugins/starters/frontend-wrapper-starter
 :uri-dynamic-plugin-be-starter-files: https://github.com/sgahlot/rhdh-op-config/tree/main/dynamic-plugins/starters/backend-wrapper-starter
 :uri-backstage-new-backend-system: https://backstage.io/docs/plugins/new-backend-system/
+:uri-mountpoints: https://github.com/janus-idp/backstage-showcase/blob/main/dynamic-plugins.default.yaml#L207-L222
+:uri-backstage-create-new-app: https://backstage.io/docs/getting-started/#1-create-your-backstage-app
+:uri-backstage-create-new-version: https://github.com/backstage/backstage/blob/25b8e7b2597e65fb033076188ce6a9d3dec3ec11/packages/create-app/package.json#L4
+:uri-janus-backstage-version: https://github.com/janus-idp/backstage-showcase/blob/main/backstage.json
 
 Documentation for creating and testing dynamic plugins. It provides instructions on configuring the dynamic plugins on OCP as well as testing them in your local Janus-IDP showcase instance.
 
 == Prerequisites
-Install the RHDH instance using the Operator (for testing/configuring on OCP) or clone the Janus-IDP showcase repo (for local testing/configuration).
+The following prerequites should be met before creating a wrapper for third-party plugins or to convert existing custom plugins to dynamic plugins:
+
+. Create a new app using npx as mentioned using the following command:
+----
+npx @backstage/create-app@0.5.11
+----
+
+[NOTE]
+====
+_RHDH 1.1 is based on backstage version `1.23.4`, which uses `0.5.11` of create-app._
+
+Steps needed to convert a custom plugin to dynamic as well as create wrapper for any third-party plugin will be performed in the backstage app 
+====
+
+[start=2]
+. Clone the Janus-IDP showcase repo for local testing/configuration
+.. _This repo will be used to test the dynamic plugins locally before deploying them in RHDH_
+
+[start=3]
+. Install the RHDH instance using the Operator (for testing/configuring on OCP).
+
 
 == Dynamic plugin wrapper
 To add dynamic plugin support to a third-party plugin, a wrapper plugin can be created. This wrapper plugin will:
@@ -65,13 +89,13 @@ _This config is needed for export-dynamic command to work and a Jira is already 
     "role": "frontend-plugin"
   },
   "dependencies": {
-    "<THIRD_PARTY_PLUGIN>": "<THIRD_PARTY_PLUGIN_VERSION>",            # <.>
+    "<THIRD_PARTY_PLUGIN>": "<THIRD_PARTY_PLUGIN_VERSION>",             # <.>
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "@backstage/cli": "0.23.1",                                         # <.>
-    "@janus-idp/cli": "^1.4.7"                                          # <.>
+    "@janus-idp/cli": "^1.7.10"                                         # <.>
   },
   "files": [
     "dist"                                                              # <.>
@@ -99,20 +123,19 @@ To deploy the dynamic plugin wrapper in a RHDH instance running in OCP, run the 
 [source,bash,options="nowrap"]
 ----
 yarn install
-yarn export-dynamic                                # <.>
+yarn export-dynamic                                                     # <.>
 
-DYNAMIC_PLUGIN_ROOT_DIR=/tmp/dynamic-plugins-root  # <.>
+DYNAMIC_PLUGIN_ROOT_DIR=/tmp/dynamic-plugins-root                       # <.>
 mkdir $DYNAMIC_PLUGIN_ROOT_DIR
-INTEGRITY_HASH=$(npm pack --pack-destination $DYNAMIC_PLUGIN_ROOT_DIR --json | jq -r '.[0].integrity')  # <.>
+FRONTEND_INTEGRITY_HASH=$(npm pack --pack-destination $DYNAMIC_PLUGIN_ROOT_DIR --json | jq -r '.[0].integrity')  \
+  && echo "Frontend plugin integrity Hash: $FRONTEND_INTEGRITY_HASH"    # <.>
 
-echo "Integrity Hash: $INTEGRITY_HASH"             # <.>
-ls -l $DYNAMIC_PLUGIN_ROOT_DIR                     # <.>
+ls -l $DYNAMIC_PLUGIN_ROOT_DIR                                          # <.>
 ----
 <1> export the plugin as a dynamic plugin
 <2> Env variable to point to the directory that will contain the dynamic plugin tgz files
-<3> Stores the integrity hash of dynamic plugin tgz file after running `npm pack` command. This will also generate the tgz file in the `DYNAMIC_PLUGIN_ROOT_DIR` dir
-<4> Displays the integrity hash. This value will be needed later on when adding this dynamic plugin to the configMap
-<5> Lists the directory to show you the contents of output directory
+<3> Stores the integrity hash of dynamic plugin tgz file after running `npm pack` command. This will also generate the tgz file in the `DYNAMIC_PLUGIN_ROOT_DIR` dir. Also displays the integrity hash, which will be needed later on when adding this dynamic plugin to the configMap
+<4> Lists the directory to show you the contents of output directory
 
 Deploy this dynamic plugin in OpenShift, as well as reference it in RHDH, by following the instructions at <<deploy_dynamic_plugins>>
 
@@ -167,9 +190,10 @@ export {default} from '<THIRD_PARTY_PLUGIN>';
 [NOTE]
 .Use of default
 ====
-* Check the third-party plugin code to see if you need to use `alpha.ts` or `index.ts`, with index.ts being implicit export
-* No change is required if the `src/index.ts` in the third-party backend plugin exports `default`, but if there is no `export default` in the `index.ts` you will have to use `alpha.ts` instead.
-** Use `export {default} from 'THIRD_PARTY_PACKAGE/alpha'` instead of `export {default} from 'THIRD_PARTY_PACKAGE'` in such a case
+* The new backend system standard entrypoint (created using createBackendPlugin() or createBackendModule()) should be exported as the default export of either the main package or of an alpha package (if the new backend support is still provided as alpha APIs)
+** Check the third-party plugin code to see if you need to use `alpha.ts` or `index.ts`, with index.ts being implicit export
+** No change is required if the `src/index.ts` in the third-party backend plugin exports `default`, but if there is no `export default` in the `index.ts` you will have to use `alpha.ts` instead.
+*** Use `export {default} from 'THIRD_PARTY_PACKAGE/alpha'` instead of `export {default} from 'THIRD_PARTY_PACKAGE'` in such a case
 ====
 
 [start=3]
@@ -178,7 +202,7 @@ export {default} from '<THIRD_PARTY_PLUGIN>';
 [source,options="nowrap"]
 ----
   "devDependencies": {
-    "@janus-idp/cli": "^1.7.9"                          # <.>
+    "@janus-idp/cli": "^1.7.10"                         # <.>
   },
   "files": [
     "dist"                                              # <.>
@@ -189,9 +213,9 @@ export {default} from '<THIRD_PARTY_PLUGIN>';
     "export-dynamic": "janus-cli package export-dynamic-plugin --embed-as-dependencies --embed-package <THIRD_PARTY_PLUGIN>"   # <.>
   }
 ----
-<1> add `@janus-idp/cli` dependency, which provides a new, required, `export-dynamic-plugin` command. _Version `1.7.9` of the janus-cli is in tech-preview at the moment. If you're unsure of using this version then use an older version, e.g. `1.4.7`_
+<1> add `@janus-idp/cli` dependency, which provides a new, required, `export-dynamic-plugin` command. _Version `1.7.10` of the janus-cli is in tech-preview at the moment. If you're unsure of using this version then use an older version, e.g. `1.7.10`_
 <2> add `dist` to the package files list
-<3> add `export-dynamic` to scripts. This will also embedd the dependencies as well as the third party package. _If using another version of janus-cli other than `1.7.9`, remove the `--embed-as-dependencies` argument from `export-dynamic` script_
+<3> add `export-dynamic` to scripts. This will also embedd the dependencies as well as the third party package. _If using another version of janus-cli other than `1.7.10`, remove the `--embed-as-dependencies` argument from `export-dynamic` script_
   
 
 ==== Export the plugin for deploying to RHDH instance           [[export_backend_plugin]]
@@ -202,20 +226,19 @@ To deploy the dynamic plugin wrapper in a RHDH instance running in OCP, run the 
 ----
 yarn install
 yarn tsc
-yarn export-dynamic                                       # <.>
+yarn export-dynamic                                                 # <.>
 
-DYNAMIC_PLUGIN_ROOT_DIR=/tmp/dynamic-plugins-root         # <.>
+DYNAMIC_PLUGIN_ROOT_DIR=/tmp/dynamic-plugins-root                   # <.>
 mkdir $DYNAMIC_PLUGIN_ROOT_DIR
-INTEGRITY_HASH=$(npm pack ./dist-dynamic --pack-destination $DYNAMIC_PLUGIN_ROOT_DIR --json | jq -r '.[0].integrity')  # <.>
+BACKEND_INTEGRITY_HASH=$(npm pack ./dist-dynamic --pack-destination $DYNAMIC_PLUGIN_ROOT_DIR --json | jq -r '.[0].integrity')  \
+  && echo "Backend plugin integrity Hash: $BACKEND_INTEGRITY_HASH"  # <.>
 
-echo "Integrity Hash: $INTEGRITY_HASH"                    # <.>
-ls -l $DYNAMIC_PLUGIN_ROOT_DIR                            # <.>
+ls -l $DYNAMIC_PLUGIN_ROOT_DIR                                      # <.>
 ----
 <1> export the plugin as a dynamic plugin
 <2> Env variable to point to the directory that will contain the dynamic plugin tgz files
-<3> Stores the integrity hash of dynamic plugin tgz file after running `npm pack` command. This will also generate the tgz file in the `DYNAMIC_PLUGIN_ROOT_DIR` dir
-<4> Displays the integrity hash. This value will be needed later on when adding this dynamic plugin to the configMap
-<5> Lists the directory to show you the contents of output directory
+<3> Stores the integrity hash of dynamic plugin tgz file after running `npm pack` command. This will also generate the tgz file in the `DYNAMIC_PLUGIN_ROOT_DIR` dir. Also displays the integrity hash, which will be needed later on when adding this dynamic plugin to the configMap
+<4> Lists the directory to show you the contents of output directory
 
 
 Deploy this dynamic plugin in OpenShift, as well as reference it in RHDH, by following the instructions at <<deploy_dynamic_plugins>>
@@ -232,12 +255,88 @@ yarn export-dynamic --dev    # <.>
 <1> export the plugin as a dynamic plugin and create a symbolic link to it in the `dynamic-plugins-root` directory in your project directory.
 
 
-== Dynamic plugin - WIP   [[custom_dynamic_plugin]]
-To add dynamic plugin support to a third-party plugin, a wrapper plugin can be created. This wrapper plugin will:
+== Dynamic custom plugin                   [[custom_dynamic_plugin]]
+To convert a custom plugin into a dynamic plug, following steps have to be performed:
 
-* import the third-party plugin as a dependency.
-* include the additions to the package.json and src/dynamic/index.ts file as described above.
-* export it as a dynamic plugin.
+* Make sure the **create new app** prerequisite is met
+* Add `export-dynamic` to `scripts`
+* Add `janus-cli` to `devDependencies`
+* Add `dist-scalprum` to `files` for frontend plugin only
+* Convert the backend plugin to the new backend system
+
+=== Dynamic Frontend custom plugin         [[custom_frontend_dynamic_plugin]]
+To convert a frontend custom plugin into a dynamic plugin, complete the following step:
+
+* Modify `package.json` and add the following config if not already present in the file:
+[source]
+----
+  "devDependencies": {
+    ...
+    "@janus-idp/cli": "^1.7.10"                                   # <.>
+  },
+  "files": [
+    "dist"
+    "dist-scalprum"                                               # <.>
+  ],
+  "scripts": {
+    ...
+    "export-dynamic": "janus-cli package export-dynamic-plugin"   # <.>
+  },
+----
+<1> add `@janus-idp/cli` as devDependency, which provides `export-dynamic-plugin` command
+<2> add `dist-scalprum` to the package files list
+<3> add `export-dynamic` to scripts
+
+
+==== Export the frontend plugin for deploying to RHDH instance       [[export_frontend_custom_plugin]]
+
+To deploy the dynamic plugin wrapper in a RHDH instance running in OCP, run the following commands _in the directory where you have code for your dynamic plugin_:
+
+[source,bash,options="nowrap"]
+----
+yarn install
+yarn export-dynamic                                                     # <.>
+
+DYNAMIC_PLUGIN_ROOT_DIR=/tmp/dynamic-plugins-root                       # <.>
+mkdir $DYNAMIC_PLUGIN_ROOT_DIR
+FRONTEND_INTEGRITY_HASH=$(npm pack --pack-destination $DYNAMIC_PLUGIN_ROOT_DIR --json | jq -r '.[0].integrity')  \
+  && echo "Frontend plugin integrity Hash: $FRONTEND_INTEGRITY_HASH"    # <.>
+
+ls -l $DYNAMIC_PLUGIN_ROOT_DIR                                          # <.>
+----
+<1> export the plugin as a dynamic plugin
+<2> Env variable to point to the directory that will contain the dynamic plugin tgz files
+<3> Stores the integrity hash of dynamic plugin tgz file after running `npm pack` command. This will also generate the tgz file in the `DYNAMIC_PLUGIN_ROOT_DIR` dir. Also displays the integrity hash, which will be needed later on when adding this dynamic plugin to the configMap
+<4> Lists the directory to show you the contents of output directory
+
+Deploy this dynamic plugin in OpenShift, as well as reference it in RHDH, by following the instructions at <<deploy_dynamic_plugins>>
+
+==== Export the plugin for deploying to local Janus instance
+
+To deploy the dynamic plugin wrapper in the Janus instance running locally, run the following commands in your frontned custom plugin directory:
+[source, bash]
+----
+export LOCAL_DYNAMIC_PLUGIN_ROOT_DIR=<JANUS_SHOWCASE_DIR>/dynamic-plugins-root    # <.>
+yarn install
+yarn export-dynamic --dev --dynamic-plugins-root $LOCAL_DYNAMIC_PLUGIN_ROOT_DIR   # <.>
+----
+<1> Environment variable to point to the local dynamic-plugin-root directory that should be in the Janus Showcase root directory
+<2> export the plugin as a dynamic plugin and create a symbolic link to it in the `dynamic-plugins-root` directory in your showcase directory to be able to run/test it locally
+
+[NOTE]
+====
+_Above commands should be run in the frontned plugin directory inside the Backstage app that is created initially_
+
+_**Do not create the symbolic link manually as that will take the node_modules from the symlink directory instead of the showcase and can cause issues at runtime**_
+
+For configuration of the frontend plugin via app-config, the plugin name can be taken from `dist-scalprum/plugin-manifest.json` file after running `export-dynamic` script
+====
+
+
+'''
+
+=== Dynamic Backend plugin         [[custom_backend_dynamic_plugin]]
+
 
 == Test the dynamic plugin on OCP [[deploy_dynamic_plugins]]
 
@@ -351,5 +450,9 @@ Configuration for most of the backend plugins will go in the above config yaml b
 
 == References
 
-* {url-dynamic-plugins}[RHDH - Dynamic plugin doc] +
+* {uri-dynamic-plugins}[RHDH - Dynamic plugin doc] +
+* {uri-mountpoints}[RHDH - Dynamic plugin - mountpoints example] +
+* {uri-backstage-create-new-app}[Backstage - create new app] +
+* {:uri-backstage-create-new-version}[Backstage - create new app version compatible with RHDH 1.1] +
+* {:uri-janus-backstage-version}[RHDH 1.1 - backstage version] +
 * {uri-backstage-new-backend-system}[Backstage new backend system] +

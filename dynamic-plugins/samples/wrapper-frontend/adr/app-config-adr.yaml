@@ -1,0 +1,20 @@
+# Configuration needed to make the ADR plugin work
+
+# Backend configuration: setup the github integration
+#   https://backstage.io/docs/integrations/
+integrations:
+  github:
+    - host: github.com
+      token: ${GITHUB_TOKEN}
+
+# Frontned plugin configuration: provides the ADR information in the "Overview" tab
+dynamicPlugins:
+  rootDirectory: dynamic-plugins-root
+  frontend:
+    adr-plugin-wrapper:
+      mountPoints:
+        - mountPoint: entity.page.overview/cards
+          importName: EntityAdrContent
+          config:
+            layout:
+              gridColumn: "1 / -1"
