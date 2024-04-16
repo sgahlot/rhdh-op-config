@@ -1,0 +1,15 @@
+= Dynamic wrapper for TODO backend plugin
+:icons: font
+:note-caption: :information_source:
+:uri-todo: https://github.com/backstage/backstage/tree/v1.23.4/plugins/todo-backend
+:uri-dynamic-plugin-readme: https://github.com/sgahlot/rhdh-op-config/blob/main/dynamic-plugins/readme.adoc#export_backend_plugin
+:uri-dynamic-plugin-readme-prereq: https://github.com/sgahlot/rhdh-op-config/blob/main/dynamic-plugins/readme.adoc#prerequisites
+
+This directory contains files to create a dynamic plugin wrapper for the {uri-todo}[TODO] backend plugin
+
+== Steps
+
+To create a dynamic plugin wrapper for TODO backend plugin, complete the following steps:
+
+. Copy the files and directories from this direcoty to a new directory in the `plugins` directory under the app created in {uri-dynamic-plugin-readme-prereq}[prerequisite - step 1]
+. Follow the instructions in {uri-dynamic-plugin-readme}[Dynamic Plugins readme] to complete the configuration and installation of this dynamic plugin wrapper.
