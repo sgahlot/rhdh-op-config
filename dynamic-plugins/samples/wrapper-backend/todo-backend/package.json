@@ -1,6 +1,6 @@
 {
   "packageManager": "yarn@1.22.19",
-  "name": "todo-wrapper",
+  "name": "todo-backend-wrapper",
   "version": "0.1.0",
   "description": "Wrapper for TODO backend plugin",
   "main": "src/index.js",
@@ -14,7 +14,7 @@
   },
   "devDependencies": {
     "@backstage/cli": "0.23.1",
-    "@janus-idp/cli": "^1.7.7"
+    "@janus-idp/cli": "^1.7.10"
   },
   "files": [
     "dist"
