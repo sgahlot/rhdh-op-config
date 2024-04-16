@@ -171,7 +171,7 @@ You can create dynamic plugin support for a third-party backend plugin with or w
 ====
 _In order to wrap a third-party backend plugin, the backend plugin should support the new {uri-backstage-new-backend-system}[Backstage backend system]_
 
-_**If the third-party backend plugin does not support the new Backstage backend system, follow the instructions given in <<add_dynamic_loading_entrypoint>>**_
+_**If the third-party backend plugin does not support the new Backstage backend system, follow the instructions given in <<add_dynamic_loading_entrypoint>> so that the wrapper can be exported as dynamic plugin**_
 ====
 
 . Create a starter package:
@@ -343,7 +343,7 @@ For configuration of the frontend plugin via app-config, the plugin name can be 
 === Dynamic Backend custom plugin         [[custom_backend_dynamic_plugin]]
 To convert a backend custom plugin into a dynamic plugin, complete the following step:
 
-* Modify `package.json` and add the following config if not already present in the file:
+. Modify `package.json` and add the following config if not already present in the file:
 [source]
 ----
   "devDependencies": {
@@ -358,6 +358,8 @@ To convert a backend custom plugin into a dynamic plugin, complete the following
 <.> add `@janus-idp/cli` as devDependency, which provides `export-dynamic-plugin` command
 <.> add `export-dynamic` to scripts
 
+[start=2]
+. Follow the instructions given in <<add_dynamic_loading_entrypoint>> so that it can be exported as dynamic plugin
 
 ==== Export the backend plugin for deploying to RHDH instance       [[export_backend_custom_plugin]]
 
