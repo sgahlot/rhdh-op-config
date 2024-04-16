@@ -1,0 +1,42 @@
+/*
+ * Template for "plugin.ts" that can be used to add dynamic loading entrypoing
+ * to a Backend plugin, to export it as a dynamic plugin.
+ *
+ * Change the tags inside @@ with correct values
+ */
+
+import {
+    coreServices,
+    createBackendPlugin,
+  } from '@backstage/backend-plugin-api';
+  import { createRouter } from './service/router';
+  
+  /**
+   * @YOUR_BACKEND_PLUGIN_NAME@ backend plugin
+   *
+   * @public
+   */
+  export const @YOUR_BACKEND_PLUGIN_NAME@Plugin = createBackendPlugin({
+    pluginId: '@YOUR_BACKEND_PLUGIN_ID@',     // pluginId shouldn't contain dashes
+    register(env) {
+      env.registerInit({
+        deps: {
+          logger: coreServices.logger,
+          httpRouter: coreServices.httpRouter,
+          // ----------------------------------------------------------
+          // Add any extra dependency that is used to create the router
+          // ----------------------------------------------------------
+        },
+        async init({ httpRouter, logger }) {
+          httpRouter.use(
+            await createRouter({
+              logger
+              // -----------------------------------------------------------
+              // Add any extra parameter that is needed to create the router
+              // -----------------------------------------------------------
+            }),
+          );
+        },
+      });
+    },
+  });
