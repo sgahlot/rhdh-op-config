@@ -6,12 +6,13 @@
 
 :uri-dynamic-plugins: https://github.com/janus-idp/backstage-showcase/blob/main/showcase-docs/dynamic-plugins.md#frontend-layout-configuration
 :uri-dynamic-plugin-fe-starter-files: https://github.com/sgahlot/rhdh-op-config/tree/main/dynamic-plugins/starters/frontend-wrapper-starter
-:uri-dynamic-plugin-be-starter-files: https://github.com/sgahlot/rhdh-op-config/tree/main/dynamic-plugins/starters/backend-wrapper-starter
+:uri-backstage-plugin-template: https://github.com/sgahlot/rhdh-op-config/tree/main/dynamic-plugins/backend-plugin.ts.template
 :uri-backstage-new-backend-system: https://backstage.io/docs/plugins/new-backend-system/
 :uri-mountpoints: https://github.com/janus-idp/backstage-showcase/blob/main/dynamic-plugins.default.yaml#L207-L222
 :uri-backstage-create-new-app: https://backstage.io/docs/getting-started/#1-create-your-backstage-app
 :uri-backstage-create-new-version: https://github.com/backstage/backstage/blob/25b8e7b2597e65fb033076188ce6a9d3dec3ec11/packages/create-app/package.json#L4
 :uri-janus-backstage-version: https://github.com/janus-idp/backstage-showcase/blob/main/backstage.json
+:uri-backend-plugin-template: https://github.com/janus-idp/backstage-showcase/blob/main/backstage.json
 
 Documentation for creating and testing dynamic plugins. It provides instructions on configuring the dynamic plugins on OCP as well as testing them in your local Janus-IDP showcase instance.
 
@@ -168,7 +169,9 @@ You can create dynamic plugin support for a third-party backend plugin with or w
 
 [NOTE]
 ====
-_**In order to wrap a third-party backend plugin, the backend plugin should support the new {uri-backstage-new-backend-system}[Backstage backend system]**_
+_In order to wrap a third-party backend plugin, the backend plugin should support the new {uri-backstage-new-backend-system}[Backstage backend system]_
+
+_**If the third-party backend plugin does not support the new Backstage backend system, follow the instructions given in <<add_dynamic_loading_entrypoint>>**_
 ====
 
 . Create a starter package:
@@ -311,7 +314,7 @@ ls -l $DYNAMIC_PLUGIN_ROOT_DIR                                          # <.>
 
 Deploy this dynamic plugin in OpenShift, as well as reference it in RHDH, by following the instructions at <<deploy_dynamic_plugins>>
 
-==== Export the plugin for deploying to local Janus instance    [[custom_frontend_plugin_local_run]]
+==== Export the plugin for deploying to local Janus instance    [[run_local_frontend_custom_plugin]]
 
 To deploy the dynamic plugin wrapper in the Janus instance running locally, run the following commands in your frontned custom plugin directory:
 [source, bash]
@@ -337,7 +340,136 @@ For configuration of the frontend plugin via app-config, the plugin name can be 
 
 '''
 
-=== Dynamic Backend plugin         [[custom_backend_dynamic_plugin]]
+=== Dynamic Backend custom plugin         [[custom_backend_dynamic_plugin]]
+To convert a backend custom plugin into a dynamic plugin, complete the following step:
+
+* Modify `package.json` and add the following config if not already present in the file:
+[source]
+----
+  "devDependencies": {
+    ...
+    "@janus-idp/cli": "^1.7.10"                                                           # <.>
+  },
+  "scripts": {
+    ...
+    "export-dynamic": "janus-cli package export-dynamic-plugin --embed-as-dependencies"   # <.>
+  },
+----
+<1> add `@janus-idp/cli` as devDependency, which provides `export-dynamic-plugin` command
+<2> add `export-dynamic` to scripts
+
+
+==== Export the backend plugin for deploying to RHDH instance       [[export_backend_custom_plugin]]
+
+To deploy the dynamic plugin wrapper in a RHDH instance running in OCP, run the following commands _in the directory where you have code for your dynamic plugin_:
+
+[source,bash,options="nowrap"]
+----
+yarn install
+yarn tsc
+yarn export-dynamic                                                 # <.>
+
+DYNAMIC_PLUGIN_ROOT_DIR=/tmp/dynamic-plugins-root                   # <.>
+mkdir $DYNAMIC_PLUGIN_ROOT_DIR
+BACKEND_INTEGRITY_HASH=$(npm pack ./dist-dynamic --pack-destination $DYNAMIC_PLUGIN_ROOT_DIR --json | jq -r '.[0].integrity')  \
+  && echo "Backend plugin integrity Hash: $BACKEND_INTEGRITY_HASH"  # <.>
+
+ls -l $DYNAMIC_PLUGIN_ROOT_DIR                                      # <.>
+----
+<1> export the plugin as a dynamic plugin
+<2> Env variable to point to the directory that will contain the dynamic plugin tgz files
+<3> Stores the integrity hash of dynamic plugin tgz file after running `npm pack` command. This will also generate the tgz file in the `DYNAMIC_PLUGIN_ROOT_DIR` dir. Also displays the integrity hash, which will be needed later on when adding this dynamic plugin to the configMap
+<4> Lists the directory to show you the contents of output directory
+
+
+Deploy this dynamic plugin in OpenShift, as well as reference it in RHDH, by following the instructions at <<deploy_dynamic_plugins>>
+
+==== Export the plugin for deploying to local Janus instance
+
+To deploy the dynamic plugin wrapper in the Janus instance running locally, run the following commands:
+[source, bash]
+----
+export LOCAL_DYNAMIC_PLUGIN_ROOT_DIR=<JANUS_SHOWCASE_DIR>/dynamic-plugins-root    # <.>
+yarn install
+yarn tsc
+yarn export-dynamic --dev --dynamic-plugins-root $LOCAL_DYNAMIC_PLUGIN_ROOT_DIR   # <.>
+----
+<1> Environment variable to point to the local dynamic-plugin-root directory that should be in the Janus Showcase root directory
+<2> export the plugin as a dynamic plugin and create a symbolic link to it in the `dynamic-plugins-root` directory in your showcase directory to be able to run/test it locally
+
+[NOTE]
+====
+_Above commands should be run in the backned plugin directory inside the Backstage app that is created initially_
+
+_**Do not create the symbolic link manually as that will take the node_modules from the symlink directory instead of the showcase and can cause issues at runtime**_
+====
+
+
+== Add dynamic loading entrypoint to Backend plugin               [[add_dynamic_loading_entrypoint]]
+If a custom or third-party backend plugin is not on the new Backstage backend system, you will need to add the following code in your wrapper for the third-party plugin or to your custom backend plugin:
+
+
+If a custom or third-party backend plugin is not on the new Backstage backend system, you will need to make the following changes to your backend plugin codebase:
+
+. Create a new file named `src/plugin.ts` with the following contents:
+
+[source, typescript]
+----
+import {
+    coreServices,
+    createBackendPlugin,
+  } from '@backstage/backend-plugin-api';
+  import { createRouter } from './service/router';
+  
+  /**
+   * @YOUR_BACKEND_PLUGIN_NAME@ backend plugin                                // <.>
+   *
+   * @public
+   */
+  export const @YOUR_BACKEND_PLUGIN_NAME@Plugin = createBackendPlugin({       // <.>
+    pluginId: '@YOUR_BACKEND_PLUGIN_ID@',                                     // <.>
+    register(env) {
+      env.registerInit({
+        deps: {
+          logger: coreServices.logger,
+          httpRouter: coreServices.httpRouter,
+          // Add any extra dependency that is used to create the router       // <.>
+        },
+        async init({ httpRouter, logger }) {
+          httpRouter.use(
+            await createRouter({
+              logger
+              // Add any extra parameter that is needed to create the router  // <.>
+            }),
+          );
+        },
+      });
+    },
+  });
+----
+<.> Repalce `@YOUR_BACKEND_PLUGIN_NAME@` with the name of your plugin for documentation purpose, e.g. `Hello-World`
+<.> Repalce `@YOUR_BACKEND_PLUGIN_NAME@` with the name of your plugin name, e.g. `helloWorld`
+<.> Replace `@YOUR_BACKEND_PLUGIN_ID@` with a unique id for your plugin, e.g. `helloWorld`
+<.> Add any extra dependency that is used to create the router for your plugin, e.g. `cache: coreServices.cache`
+<.> Add any extra parameters that are used to create the router for your plugin, e.g. `cacheClient: cache`
+
+[NOTE]
+====
+_Above code is also provided at {uri-backstage-plugin-template}[Backend plugin template]_
+
+_**Replace all the tags inside @@ with valid values**_
+====
+
+[start=2]
+. Modify `src/index.ts` by adding the following code:
+
+[source, typescript]
+----
+...
+
+export { @YOUR_BACKEND_PLUGIN_ID@ as default } from './plugin';   // <.>
+----
+<.> `@YOUR_BACKEND_PLUGIN_ID@` is the pluginId (from `src/plugin.ts`) for your backend custom plugin or the wrapper for the third-party plugin
 
 
 == Test the dynamic plugin on OCP [[deploy_dynamic_plugins]]
@@ -454,7 +586,7 @@ Configuration for most of the backend plugins will go in the above config yaml b
 
 * {uri-dynamic-plugins}[RHDH - Dynamic plugin doc] +
 * {uri-mountpoints}[RHDH - Dynamic plugin - mountpoints example] +
-* {uri-backstage-create-new-app}[Backstage - create new app] +
-* {:uri-backstage-create-new-version}[Backstage - create new app version compatible with RHDH 1.1] +
-* {:uri-janus-backstage-version}[RHDH 1.1 - backstage version] +
 * {uri-backstage-new-backend-system}[Backstage new backend system] +
+* {uri-backstage-create-new-app}[Backstage - create new app] +
+* {uri-backstage-create-new-version}[Backstage - create new app version (compatible with RHDH 1.1)] +
+* {uri-janus-backstage-version}[RHDH 1.1 - backstage version] +
