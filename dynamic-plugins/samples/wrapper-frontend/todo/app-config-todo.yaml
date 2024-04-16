@@ -1,0 +1,36 @@
+# Configuration needed to make the TODO plugin work
+
+
+# Local Janus configuration
+# Frontned plugin configuration: provides the TODO information in the "Overview" tab
+dynamicPlugins:
+  rootDirectory: dynamic-plugins-root
+  frontend:
+    todo-wrapper:
+      mountPoints:
+        - mountPoint: entity.page.overview/cards
+          importName: EntityTodoContent
+          config:
+            layout:
+              gridColumn: "1 / -1"
+
+# RHDH configuration
+# Frontned plugin configuration: provides the TODO information in the "Overview" tab
+  plugins:
+    # ...
+    # Existing dynamic packages
+    # ...
+
+    - package: '<Location_of_todo_wrapper>'
+      disabled: false
+      integrity: 'TODO_WRAPPER_HASH'
+      pluginConfig:
+        dynamicPlugins:
+          frontend:
+            todo-wrapper:
+              mountPoints:
+                - mountPoint: entity.page.overview/cards
+                  importName: EntityTodoContent
+                  config:
+                    layout:
+                      gridColumn: "1 / -1" 
