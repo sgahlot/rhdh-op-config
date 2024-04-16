@@ -214,14 +214,15 @@ data:
         disabled: true
         integrity: ''
         pluginConfig:
-          frontend:
-            adr-plugin-wrapper:
-              mountPoints:
-                - mountPoint: entity.page.overview/cards
-                  importName: EntityAdrContent
-                  config:
-                    layout:
-                      gridColumn: "1 / -1"
+          dynamicPlugins:
+            frontend:
+              adr-wrapper:
+                mountPoints:
+                  - mountPoint: entity.page.overview/cards
+                    importName: EntityAdrContent
+                    config:
+                      layout:
+                        gridColumn: "1 / -1"
       - package: 'http://plugin-registry:8080/adr-backend-plugin-wrapper-dynamic-0.1.0.tgz'
         disabled: true
         integrity: ''

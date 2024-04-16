@@ -4,18 +4,19 @@ This directory contains starter files to create a dynamic plugin wrapper for thi
 
 :icons: font
 :uri-dynamic-plugin-readme: https://github.com/sgahlot/rhdh-op-config/blob/main/dynamic-plugins/readme.adoc#export_backend_plugin
+:uri-dynamic-plugin-readme-prereq: https://github.com/sgahlot/rhdh-op-config/blob/main/dynamic-plugins/readme.adoc#prerequisites
 :uri-setup-script: https://github.com/sgahlot/rhdh-op-config/tree/main/dynamic-plugins/starters/setup-wrapper.sh
 :uri-backstage-new-backend-system: https://backstage.io/docs/plugins/new-backend-system/
 
 == Plugin wrapper for backend plugin
 
-To create a dynamic plugin wrapper for third-party backend plugin, copy the files and directories from this direcoty to an empty directory, and either run {uri-setup-script}[setup-wrapper.sh] or follow these stpes to change the files in the new directory:
+To create a dynamic plugin wrapper for third-party backend plugin, copy the files and directories from this direcoty to a new directory in the `plugins` directory under the app created in {uri-dynamic-plugin-readme-prereq}[prerequisite - step 1], and either run {uri-setup-script}[setup-wrapper.sh] or follow these stpes to change the files in the new directory:
 
 [NOTE]
 The script `setup-backend.sh` can be run without any arguments to see its usage.
 
-* Copy `src/index.ts.template` to `src/index.ts`
-* Replace the `THIRD_PARTY_PLUGIN_WITH_SCOPE` in `src/index.ts` with correct third-party plugin
+. Copy `src/index.ts.template` to `src/index.ts`
+. Replace the `THIRD_PARTY_PLUGIN_WITH_SCOPE` in `src/index.ts` with correct third-party plugin
 
 [NOTE]
 .Use of default
@@ -26,8 +27,9 @@ The script `setup-backend.sh` can be run without any arguments to see its usage.
 *** Use `export {default} from 'THIRD_PARTY_PACKAGE/alpha'` instead of `export {default} from 'THIRD_PARTY_PACKAGE'` in such a case
 ====
 
-* Copy `package.json.template` to `package.json`
-* Replace the following with correct values, in `package.json`:
+[start=3]
+. Copy `package.json.template` to `package.json`
+. Replace the following with correct values, in `package.json`:
 
 [source,options="nowrap"]
 ----
@@ -51,6 +53,9 @@ The script `setup-backend.sh` can be run without any arguments to see its usage.
 <4> Replace with the third-party plugin and its version
 <5> Version `1.7.9` of the janus-cli is in tech-preview at the moment
 <6> Replace with the third-party plugin
+
+[start=5]
+. If trying to create the wrapper outside the backstage `app/plugins` directory, rename `tsconfig.json.template` to `tsconfig.json`.
 
 Once the above changes are complete, follow the instructions in {uri-dynamic-plugin-readme}[Dynamic Plugins readme] to complete the configuration and installation of this dynamic plugin wrapper.
 

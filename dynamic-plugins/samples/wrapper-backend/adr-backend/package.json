@@ -1,6 +1,6 @@
 {
   "packageManager": "yarn@1.22.19",
-  "name": "adr-backend-plugin-wrapper",
+  "name": "adr-backend-wrapper",
   "version": "0.1.0",
   "description": "Wrapper for adr backend plugin",
   "main": "src/index.js",

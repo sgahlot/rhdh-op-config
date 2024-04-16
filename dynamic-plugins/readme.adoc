@@ -6,7 +6,9 @@
 
 :uri-dynamic-plugins: https://github.com/janus-idp/backstage-showcase/blob/main/showcase-docs/dynamic-plugins.md#frontend-layout-configuration
 :uri-dynamic-plugin-fe-starter-files: https://github.com/sgahlot/rhdh-op-config/tree/main/dynamic-plugins/starters/frontend-wrapper-starter
-:uri-backstage-plugin-template: https://github.com/sgahlot/rhdh-op-config/tree/main/dynamic-plugins/backend-plugin.ts.template
+:uri-backstage-dynamic-loading-template: https://github.com/sgahlot/rhdh-op-config/tree/main/dynamic-plugins/backend-plugin.ts.template
+:uri-backstage-dynamic-loading-example: https://github.com/sgahlot/rhdh-op-config/tree/main/dynamic-plugins/samples/custom/hello-world-backend/src/plugin.ts
+:uri-backstage-dynamic-loading-index: https://github.com/sgahlot/rhdh-op-config/blob/6426b3a03deea14316453cdfa6c6a476c8a2cbc1/dynamic-plugins/samples/custom/hello-world-backend/src/index.ts#L3
 :uri-backstage-new-backend-system: https://backstage.io/docs/plugins/new-backend-system/
 :uri-mountpoints: https://github.com/janus-idp/backstage-showcase/blob/main/dynamic-plugins.default.yaml#L207-L222
 :uri-backstage-create-new-app: https://backstage.io/docs/getting-started/#1-create-your-backstage-app
@@ -28,7 +30,7 @@ npx @backstage/create-app@0.5.11
 ====
 _RHDH 1.1 is based on backstage version `1.23.4`, which uses `0.5.11` of create-app._
 
-_**Steps needed to convert a custom plugin to dynamic as well as create wrapper for any third-party plugin will be performed in the backstage app**_
+_**Steps needed to convert a custom plugin to dynamic, as well as to create wrapper for any third-party plugin, will be performed in the backstage app**_
 ====
 
 [start=2]
@@ -457,7 +459,7 @@ import {
 
 [NOTE]
 ====
-_Above code is also provided at {uri-backstage-plugin-template}[Backend plugin template]_
+_Template for the above code is provided at {uri-backstage-dynamic-loading-template}[Backend plugin template]. A real example is provided {uri-backstage-dynamic-loading-example}[here]_
 
 _**Replace all the tags inside @@ with valid values**_
 ====
@@ -472,6 +474,11 @@ _**Replace all the tags inside @@ with valid values**_
 export { @YOUR_BACKEND_PLUGIN_ID@ as default } from './plugin';   // <.>
 ----
 <.> `@YOUR_BACKEND_PLUGIN_ID@` is the pluginId (from `src/plugin.ts`) for your backend custom plugin or the wrapper for the third-party plugin
+
+[NOTE]
+====
+_Example for the above code is provided at {uri-backstage-dynamic-loading-index}[here]_
+====
 
 
 == Test the dynamic plugin on OCP [[deploy_dynamic_plugins]]

@@ -1,8 +1,8 @@
 {
   "packageManager": "yarn@1.22.19",
-  "name": "adr-plugin-wrapper",
+  "name": "adr-wrapper",
   "version": "0.1.0",
-  "description": "Wrapper for adr-plugin-frontend",
+  "description": "Wrapper for adr frontend plugin",
   "main": "src/index.js",
   "author": "sgahlot",
   "license": "Apache-2.0",

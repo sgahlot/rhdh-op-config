@@ -32,13 +32,34 @@ integrations:
 dynamicPlugins:
   rootDirectory: dynamic-plugins-root
   frontend:
-    adr-plugin-wrapper:
+    adr-wrapper:
       mountPoints:
         - mountPoint: entity.page.overview/cards
           importName: EntityAdrContent
           config:
             layout:
               gridColumn: "1 / -1"
+
+# RHDH configuration
+# Frontned plugin configuration: provides the ADR information in the "Overview" tab
+  plugins:
+    # ...
+    # Existing dynamic packages
+    # ...
+
+    - package: '<Location_of_adr_wrapper>'
+      disabled: false
+      integrity: 'ADR_WRAPPER_HASH'
+      pluginConfig:
+        dynamicPlugins:
+          frontend:
+            adr-wrapper:
+              mountPoints:
+                - mountPoint: entity.page.overview/cards
+                  importName: EntityAdrContent
+                  config:
+                    layout:
+                      gridColumn: "1 / -1" 
 ----
 
 After the restart of RHDH (or Janus local), you should see the ADR contents in the **Overview** tab of your entity.
