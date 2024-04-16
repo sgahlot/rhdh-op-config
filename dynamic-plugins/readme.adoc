@@ -135,7 +135,7 @@ FRONTEND_INTEGRITY_HASH=$(npm pack --pack-destination $DYNAMIC_PLUGIN_ROOT_DIR -
 
 ls -l $DYNAMIC_PLUGIN_ROOT_DIR                                          # <.>
 ----
-<.> export the plugin as a dynamic plugin
+<.> Export the plugin as a dynamic plugin
 <.> Env variable to point to the directory that will contain the dynamic plugin tgz files
 <.> Stores the integrity hash of dynamic plugin tgz file after running `npm pack` command. This will also generate the tgz file in the `DYNAMIC_PLUGIN_ROOT_DIR` dir. Also displays the integrity hash, which will be needed later on when adding this dynamic plugin to the configMap
 <.> Lists the directory to show you the contents of output directory
@@ -153,15 +153,25 @@ _Once the dependency is added, re-run `yarn install` before running `yarn export
 ====
 
 
-==== Export the plugin for deploying to local Janus instance
+==== Export the plugin for deploying to local Janus instance        [[export_frontend_plugin_local]]
 
 To deploy the dynamic plugin wrapper in the Janus instance running locally, run the following commands:
 [source, bash]
 ----
+export LOCAL_DYNAMIC_PLUGIN_ROOT_DIR=<JANUS_SHOWCASE_DIR>/dynamic-plugins-root     # <.>
 yarn install
-yarn export-dynamic --dev    # <.>
+yarn export-dynamic --dev --dynamic-plugins-root $LOCAL_DYNAMIC_PLUGIN_ROOT_DIR    # <.>
 ----
-<.> export the plugin as a dynamic plugin and create a symbolic link to it in the `dynamic-plugins-root` directory in your project directory.
+<.> Environment variable to point to the local dynamic-plugin-root directory that should be in the Janus Showcase root directory
+<.> Export the plugin as a dynamic plugin and create a symbolic link to it in the `dynamic-plugins-root` directory in your showcase directory to be able to run/test it locally
+
+[NOTE]
+====
+_Above commands should be run in the frontend plugin directory inside the Backstage app that is created initially_
+
+_**Do not create the symbolic link manually as that will take the node_modules from the symlink directory instead of the showcase and can cause issues at runtime**_
+====
+
 
 '''
 
@@ -240,7 +250,7 @@ BACKEND_INTEGRITY_HASH=$(npm pack ./dist-dynamic --pack-destination $DYNAMIC_PLU
 
 ls -l $DYNAMIC_PLUGIN_ROOT_DIR                                      # <.>
 ----
-<.> export the plugin as a dynamic plugin
+<.> Export the plugin as a dynamic plugin
 <.> Env variable to point to the directory that will contain the dynamic plugin tgz files
 <.> Stores the integrity hash of dynamic plugin tgz file after running `npm pack` command. This will also generate the tgz file in the `DYNAMIC_PLUGIN_ROOT_DIR` dir. Also displays the integrity hash, which will be needed later on when adding this dynamic plugin to the configMap
 <.> Lists the directory to show you the contents of output directory
@@ -248,16 +258,25 @@ ls -l $DYNAMIC_PLUGIN_ROOT_DIR                                      # <.>
 
 Deploy this dynamic plugin in OpenShift, as well as reference it in RHDH, by following the instructions at <<deploy_dynamic_plugins>>
 
-==== Export the plugin for deploying to local Janus instance
+==== Export the plugin for deploying to local Janus instance        [[export_backend_plugin_local]]
 
 To deploy the dynamic plugin wrapper in the Janus instance running locally, run the following commands:
 [source, bash]
 ----
+export LOCAL_DYNAMIC_PLUGIN_ROOT_DIR=<JANUS_SHOWCASE_DIR>/dynamic-plugins-root     # <.>
 yarn install
 yarn tsc
-yarn export-dynamic --dev    # <.>
+yarn export-dynamic --dev --dynamic-plugins-root $LOCAL_DYNAMIC_PLUGIN_ROOT_DIR    # <.>
 ----
-<.> export the plugin as a dynamic plugin and create a symbolic link to it in the `dynamic-plugins-root` directory in your project directory.
+<.> Environment variable to point to the local dynamic-plugin-root directory that should be in the Janus Showcase root directory
+<.> Export the plugin as a dynamic plugin and create a symbolic link to it in the `dynamic-plugins-root` directory in your showcase directory to be able to run/test it locally
+
+[NOTE]
+====
+_Above commands should be run in the frontend plugin directory inside the Backstage app that is created initially_
+
+_**Do not create the symbolic link manually as that will take the node_modules from the symlink directory instead of the showcase and can cause issues at runtime**_
+====
 
 
 == Dynamic custom plugin                   [[custom_dynamic_plugin]]
@@ -309,7 +328,7 @@ FRONTEND_INTEGRITY_HASH=$(npm pack --pack-destination $DYNAMIC_PLUGIN_ROOT_DIR -
 
 ls -l $DYNAMIC_PLUGIN_ROOT_DIR                                          # <.>
 ----
-<.> export the plugin as a dynamic plugin
+<.> Export the plugin as a dynamic plugin
 <.> Env variable to point to the directory that will contain the dynamic plugin tgz files
 <.> Stores the integrity hash of dynamic plugin tgz file after running `npm pack` command. This will also generate the tgz file in the `DYNAMIC_PLUGIN_ROOT_DIR` dir. Also displays the integrity hash, which will be needed later on when adding this dynamic plugin to the configMap
 <.> Lists the directory to show you the contents of output directory
@@ -328,7 +347,7 @@ yarn export-dynamic --dev --dynamic-plugins-root $LOCAL_DYNAMIC_PLUGIN_ROOT_DIR 
 ls -l $LOCAL_DYNAMIC_PLUGIN_ROOT_DIR
 ----
 <.> Environment variable to point to the local dynamic-plugin-root directory that should be in the Janus Showcase root directory
-<.> export the plugin as a dynamic plugin and create a symbolic link to it in the `dynamic-plugins-root` directory in your showcase directory to be able to run/test it locally
+<.> Export the plugin as a dynamic plugin and create a symbolic link to it in the `dynamic-plugins-root` directory in your showcase directory to be able to run/test it locally
 
 [NOTE]
 ====
@@ -388,7 +407,7 @@ ls -l $DYNAMIC_PLUGIN_ROOT_DIR                                      # <.>
 
 Deploy this dynamic plugin in OpenShift, as well as reference it in RHDH, by following the instructions at <<deploy_dynamic_plugins>>
 
-==== Export the plugin for deploying to local Janus instance
+==== Export the plugin for deploying to local Janus instance          [[export_backend_custom_plugin_local]]
 
 To deploy the dynamic plugin wrapper in the Janus instance running locally, run the following commands:
 [source, bash]

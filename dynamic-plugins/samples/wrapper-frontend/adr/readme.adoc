@@ -1,11 +1,13 @@
 = Dynamic wrapper for ADR plugin
-
-This directory contains files to create a dynamic plugin wrapper for the ADR plugin
-
 :icons: font
+:note-caption: :information_source:
 :uri-adr: https://github.com/backstage/backstage/tree/master/plugins/adr
 :uri-adr-backend: https://github.com/backstage/backstage/blob/master/plugins/adr-backend/README.md
 :uri-app-config: https://github.com/sgahlot/rhdh-op-config/blob/main/dynamic-plugins/samples/wrapper-frontend/adr/app-config-adr.yaml
+:uri-export-frontend-plugin: https://github.com/sgahlot/rhdh-op-config/tree/main/dynamic-plugins#export_frontend_plugin
+:uri-export-frontend-plugin-local: https://github.com/sgahlot/rhdh-op-config/tree/main/dynamic-plugins#export_frontend_plugin_local
+
+This directory contains files to create a dynamic plugin wrapper for the ADR plugin
 
 == Steps
 
@@ -17,7 +19,11 @@ To create a dynamic plugin wrapper for ADR plugin, copy the files present in thi
   yarn export-dynamic
 ----
 
-To test this plugin in RHDH (or local Janus Showcase codebase), add the contents of {uri-app-config}[ADR app config] to a configMap used by RHDH instance (or to your app-config.local.yaml for local Janus testing):
+This wrapper can be tested in RHDH or locally. To test it, following steps should be performed:
+
+. To test in RHDH instance
+** Follow {uri-export-frontend-plugin}[these instructions] to export this dynamic wrapper
+** Add the following content to a configMap:
 
 [source="yaml",options="nowrap"]
 ----
@@ -27,18 +33,6 @@ integrations:
   github:
     - host: github.com
       token: ${GITHUB_TOKEN}
-
-# Frontned plugin configuration: provides the ADR information in the "Overview" tab
-dynamicPlugins:
-  rootDirectory: dynamic-plugins-root
-  frontend:
-    adr-wrapper:
-      mountPoints:
-        - mountPoint: entity.page.overview/cards
-          importName: EntityAdrContent
-          config:
-            layout:
-              gridColumn: "1 / -1"
 
 # RHDH configuration
 # Frontned plugin configuration: provides the ADR information in the "Overview" tab
@@ -62,4 +56,36 @@ dynamicPlugins:
                       gridColumn: "1 / -1" 
 ----
 
+[start=2]
+. To test in Janus local instance
+** Follow {uri-export-frontend-plugin-local}[these instructions] to export this dynamic wrapper
+** Add the following content to app-config yaml:
+
+[source="yaml",options="nowrap"]
+----
+# Backend configuration: setup the github integration
+#   https://backstage.io/docs/integrations/
+integrations:
+  github:
+    - host: github.com
+      token: ${GITHUB_TOKEN}
+
+# Frontned plugin configuration: provides the ADR information in the "Overview" tab
+dynamicPlugins:
+  rootDirectory: dynamic-plugins-root
+  frontend:
+    adr-wrapper:
+      mountPoints:
+        - mountPoint: entity.page.overview/cards
+          importName: EntityAdrContent
+          config:
+            layout:
+              gridColumn: "1 / -1"
+----
+
 After the restart of RHDH (or Janus local), you should see the ADR contents in the **Overview** tab of your entity.
+
+[NOTE]
+====
+_**The config provided above is also given in {uri-app-config}[ADR app config]**_
+====
