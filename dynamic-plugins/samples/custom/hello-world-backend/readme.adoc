@@ -1,0 +1,27 @@
+= Dynamic custom backend plugin - hello-world
+:icons: font
+:uri-rhdh-testing: https://github.com/sgahlot/rhdh-op-config/blob/main/dynamic-plugins/readme.adoc#export_frontend_custom_plugin
+:uri-local-testing: https://github.com/sgahlot/rhdh-op-config/blob/main/dynamic-plugins/readme.adoc#run_local_frontend_custom_plugin
+
+
+Welcome to the hello-world backend plugin! It has been converted to a dynamic plugin by making the necessary changes to the `package.json`
+
+_This plugin was created through the Backstage CLI_
+
+== Getting started
+
+Follow the steps given below to start this plugin in RHDH instance or in local Janus intance:
+
+* RHDH instance
+** To export and test the plugin in RHDH instance, follow {uri-rhdh-testing}[these instructions]
+
+* Local Janus intance
+** To export and test the plugin in local Janus instance, follow {uri-local-testing}[these instructions]
+
+Once the RHDH instance or Janus local instance is started, test this plugin by opening the following URL in a browser:
+
+* URL for RHDH instance
+`<RHDH_INSTANCE>/api/helloWorld/health`
+
+* URL for Janus local instance
+`http://localhost:7007/api/helloWorld/health`
