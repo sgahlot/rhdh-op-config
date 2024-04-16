@@ -1,2 +1,2 @@
-export * from '@backstage/plugin-adr';
+export * from '@backstage/plugin-todo';
 
