@@ -11,6 +11,7 @@
 :uri-backstage-dynamic-loading-index: https://github.com/sgahlot/rhdh-op-config/blob/6426b3a03deea14316453cdfa6c6a476c8a2cbc1/dynamic-plugins/samples/custom/hello-world-backend/src/index.ts#L3
 :uri-backstage-new-backend-system: https://backstage.io/docs/plugins/new-backend-system/
 :uri-mountpoints: https://github.com/janus-idp/backstage-showcase/blob/main/dynamic-plugins.default.yaml#L207-L222
+:uri-rhdh-mountpoints: https://github.com/janus-idp/backstage-showcase/blob/main/showcase-docs/dynamic-plugins.md#using-mount-points
 :uri-backstage-create-new-app: https://backstage.io/docs/getting-started/#1-create-your-backstage-app
 :uri-backstage-create-new-version: https://github.com/backstage/backstage/blob/25b8e7b2597e65fb033076188ce6a9d3dec3ec11/packages/create-app/package.json#L4
 :uri-janus-backstage-version: https://github.com/janus-idp/backstage-showcase/blob/main/backstage.json
@@ -706,6 +707,7 @@ dynamicPlugins:
 
 * {uri-dynamic-plugins}[RHDH - Dynamic plugin doc] +
 * {uri-mountpoints}[RHDH - Dynamic plugin - mountpoints example] +
+* {uri-rhdh-mountpoints}[RHDH - Dynamic plugin - available mountpoints] +
 * {uri-backstage-new-backend-system}[Backstage new backend system] +
 * {uri-backstage-create-new-app}[Backstage - create new app] +
 * {uri-backstage-create-new-version}[Backstage - create new app version (compatible with RHDH 1.1)] +
