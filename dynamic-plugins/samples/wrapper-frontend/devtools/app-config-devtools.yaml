@@ -1,0 +1,49 @@
+# Configuration needed to make the DevTools plugin work
+
+# Local Janus configuration
+# Frontned plugin configuration: provides the DevTools information in the "Overview" tab as well as from a link in the Sidebar
+dynamicPlugins:
+  rootDirectory: dynamic-plugins-root
+  frontend:
+    devtools-wrapper:
+      dynamicRoutes:
+        - importName: DevToolsPage
+          menuItem:
+            text: DevTools
+            icon: chat
+          path: /devtools
+      mountPoints:
+        - mountPoint: entity.page.overview/cards
+          importName: DevToolsPage
+          config:
+            layout:
+              gridColumn: "1 / -1"
+              width: 50vw
+
+# RHDH configuration
+# Frontned plugin configuration: provides the DevTools information in the "Overview" tab as well as from a link in the Sidebar
+  plugins:
+    # ...
+    # Existing dynamic packages
+    # ...
+
+    - package: '<Location_of_DevTools_wrapper>'
+      disabled: false
+      integrity: 'DevTools_WRAPPER_HASH'
+      pluginConfig:
+        dynamicPlugins:
+          frontend:
+            devtools-wrapper:
+              dynamicRoutes:
+                - importName: DevToolsPage
+                  menuItem:
+                    text: DevTools
+                    icon: chat
+                  path: /devtools                
+              mountPoints:
+                - mountPoint: entity.page.overview/cards
+                  importName: DevToolsPage
+                  config:
+                    layout:
+                      gridColumn: "1 / -1"
+                      width: 50vw
