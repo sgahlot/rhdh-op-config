@@ -27,7 +27,7 @@ This wrapper can be tested in RHDH or locally. To test it, following steps shoul
 [source="yaml",options="nowrap"]
 ----
 # RHDH configuration
-# Frontned plugin configuration: provides the Bazaar information in the "Overview" tab
+# Frontned plugin configuration: provides the Bazaar information in the "Overview" tab as well as from a link in the Sidebar
   plugins:
     # ...
     # Existing dynamic packages
@@ -62,7 +62,7 @@ This wrapper can be tested in RHDH or locally. To test it, following steps shoul
 
 [source="yaml",options="nowrap"]
 ----
-# Frontned plugin configuration: provides the Bazaar information in the "Overview" tab
+# Frontned plugin configuration: provides the Bazaar information in the "Overview" tab as well as from a link in the Sidebar
 dynamicPlugins:
   rootDirectory: dynamic-plugins-root
   frontend:

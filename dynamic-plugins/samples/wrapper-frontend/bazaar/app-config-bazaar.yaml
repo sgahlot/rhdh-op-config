@@ -1,7 +1,7 @@
 # Configuration needed to make the Bazaar plugin work
 
 # Local Janus configuration
-# Frontned plugin configuration: provides the Bazaar information in the "Overview" tab
+# Frontned plugin configuration: provides the Bazaar information in the "Overview" tab as well as from a link in the Sidebar
 dynamicPlugins:
   rootDirectory: dynamic-plugins-root
   frontend:
@@ -21,7 +21,7 @@ dynamicPlugins:
               width: 50vw
 
 # RHDH configuration
-# Frontned plugin configuration: provides the Bazaar information in the "Overview" tab
+# Frontned plugin configuration: provides the Bazaar information in the "Overview" tab as well as from a link in the Sidebar
   plugins:
     # ...
     # Existing dynamic packages
