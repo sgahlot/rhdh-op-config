@@ -1,6 +1,6 @@
 {
   "packageManager": "yarn@1.22.19",
-  "name": "bazaar-frontend-wrapper",
+  "name": "bazaar-wrapper",
   "version": "0.1.0",
   "description": "Wrapper for bazaar frontend plugin",
   "main": "src/index.js",

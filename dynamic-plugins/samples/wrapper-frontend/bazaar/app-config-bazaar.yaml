@@ -1,0 +1,49 @@
+# Configuration needed to make the Bazaar plugin work
+
+# Local Janus configuration
+# Frontned plugin configuration: provides the Bazaar information in the "Overview" tab
+dynamicPlugins:
+  rootDirectory: dynamic-plugins-root
+  frontend:
+    bazaar-wrapper:
+      dynamicRoutes:
+        - importName: BazaarPage
+          menuItem:
+            text: Bazaar
+            icon: catalog
+          path: /bazaar
+      mountPoints:
+        - mountPoint: entity.page.overview/cards
+          importName: BazaarOverviewCard
+          config:
+            layout:
+              gridColumn: "1 / -1"
+              width: 50vw
+
+# RHDH configuration
+# Frontned plugin configuration: provides the Bazaar information in the "Overview" tab
+  plugins:
+    # ...
+    # Existing dynamic packages
+    # ...
+
+    - package: '<Location_of_bazaar_wrapper>'
+      disabled: false
+      integrity: 'BAZAAR_WRAPPER_HASH'
+      pluginConfig:
+        dynamicPlugins:
+          frontend:
+            bazaar-wrapper:
+              dynamicRoutes:
+                - importName: BazaarPage
+                  menuItem:
+                    text: Bazaar
+                    icon: catalog
+                  path: /bazaar
+              mountPoints:
+                - mountPoint: entity.page.overview/cards
+                  importName: BazaarOverviewCard
+                  config:
+                    layout:
+                      gridColumn: "1 / -1"
+                      width: 50vw
