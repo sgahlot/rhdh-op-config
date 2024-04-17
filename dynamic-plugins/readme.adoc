@@ -17,6 +17,13 @@
 :uri-backend-plugin-template: https://github.com/janus-idp/backstage-showcase/blob/main/backstage.json
 :uri-icons: https://github.com/janus-idp/backstage-showcase/blob/main/showcase-docs/dynamic-plugins.md#extend-internal-library-of-available-icons
 :uri-icons-systen-internal: https://github.com/backstage/backstage/blob/master/packages/app-defaults/src/defaults/icons.tsx
+:uri-custom-icon-exported-ex: https://github.com/sgahlot/rhdh-op-config/blob/main/dynamic-plugins/samples/wrapper-frontend/bazaar/src/index.ts#L1
+:uri-custom-icon-use-ex-1: https://github.com/sgahlot/rhdh-op-config/blob/main/dynamic-plugins/samples/wrapper-frontend/bazaar/app-config-bazaar.yaml#L10
+:uri-custom-icon-use-ex-2: https://github.com/sgahlot/rhdh-op-config/blob/main/dynamic-plugins/samples/wrapper-frontend/bazaar/app-config-bazaar.yaml#L11
+:uri-custom-icon-use-ex-3: https://github.com/sgahlot/rhdh-op-config/blob/main/dynamic-plugins/samples/wrapper-frontend/bazaar/app-config-bazaar.yaml#L16
+:uri-system-icon-use-ex: https://github.com/sgahlot/rhdh-op-config/blob/main/dynamic-plugins/samples/wrapper-frontend/devtools/app-config-devtools.yaml#L13
+
+
 
 Documentation for creating and testing dynamic plugins. It provides instructions on configuring the dynamic plugins on OCP as well as testing them in your local Janus-IDP showcase instance.
 
@@ -644,12 +651,13 @@ export { default as fancyIcon } from '@material-ui/icons/<SOME_FANCY_ICON>';    
           frontend:
             <FRONTEND_DYNAMIC_PLUGIN_NAME>:
               appIcons:
-               - name: textNameForTheFancyIcon
-                 importName: fancyIcon          # <.>
-               - name: chatIcon
-                 importName: chat               # <.>
+               - name: textNameForTheFancyIcon      # <.>
+                 importName: fancyIcon              # <.>
               dynamicRoutes:
-                ...
+                - importName: <IMPORTED_COMPONENT>
+                  menuItem:
+                    text: <MENU_TEXT>
+                    icon: textNameForTheFancyIcon   # <.>
               mountPoints:
                 ...
 ----
@@ -665,25 +673,33 @@ dynamicPlugins:
   frontend:
     <FRONTEND_DYNAMIC_PLUGIN_NAME>:
       appIcons:
-        - name: textNameForTheFancyIcon
-          importName: fancyIcon          # <.>
-        - name: chatIcon
-          importName: chat               # <.>
+        - name: textNameForTheFancyIcon     # <.>
+          importName: fancyIcon             # <.>
       dynamicRoutes:
+        - importName: <IMPORTED_COMPONENT>
+          menuItem:
+            text: <MENU_TEXT>
+            icon: textNameForTheFancyIcon   # <.>
       ...
       mountPoints:
       ...
       ...
 ----
+<.> Icon name to be used in `menuItem`
 <.> Custom icon that has been exported as `fancyIcon`
-<.> System icon that has been exported as `chat` in the list of _{uri-icons-systen-internal}[Backstage system icons]_
+<.> Use the menu name defined earlier in (1)
 
 [NOTE]
 ====
-_{uri-icons-systen-internal}[Backstage system icons] can be used without any extra exports. To use the system icons,
-simply add them to the `app-config` yaml as shown above._
-====
+. _{uri-icons-systen-internal}[Backstage system icons] can be used without any extra exports. To use the system icons, simply add them to the `app-config` yaml as shown above._
 
+. Check the following files for the use of custom and system icons:
+.. {uri-custom-icon-exported-ex}[Export custom icon]
+.. {uri-custom-icon-use-ex-1}[Custom icon text name]
+.. {uri-custom-icon-use-ex-2}[Custom icon exported name]
+.. {uri-custom-icon-use-ex-3}[Reference custom icon]
+.. {uri-system-icon-use-ex}[Reference system icon]
+====
 
 
 == References

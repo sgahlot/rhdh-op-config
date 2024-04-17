@@ -40,11 +40,14 @@ This wrapper can be tested in RHDH or locally. To test it, following steps shoul
         dynamicPlugins:
           frontend:
             bazaar-wrapper:
+              appIcons:
+                - name: bazaarStorefrontIcon                      # <.>
+                  importName: StorefrontIcon                      # <.>            
               dynamicRoutes:
                 - importName: BazaarPage
                   menuItem:
                     text: Bazaar
-                    icon: catalog
+                    icon: bazaarStorefrontIcon                    # <.>
                   path: /bazaar
               mountPoints:
                 - mountPoint: entity.page.overview/cards
@@ -54,6 +57,9 @@ This wrapper can be tested in RHDH or locally. To test it, following steps shoul
                       gridColumn: "1 / -1"
                       width: 50vw
 ----
+<.> Icon name to be used in menuItem
+<.> Icon name that was exported in the plugin wrapper
+<.> Same name as defined earlier in (1)
 
 [start=2]
 . To test in Janus local instance
@@ -67,11 +73,14 @@ dynamicPlugins:
   rootDirectory: dynamic-plugins-root
   frontend:
     bazaar-wrapper:
+      appIcons:
+        - name: bazaarStorefrontIcon                      # <.>
+          importName: StorefrontIcon                      # <.>
       dynamicRoutes:
         - importName: BazaarPage
           menuItem:
             text: Bazaar
-            icon: catalog
+            icon: bazaarStorefrontIcon                    # <.>
           path: /bazaar
       mountPoints:
         - mountPoint: entity.page.overview/cards
@@ -81,6 +90,9 @@ dynamicPlugins:
               gridColumn: "1 / -1"
               width: 50vw
 ----
+<.> Icon name to be used in menuItem
+<.> Icon name that was exported in the plugin wrapper
+<.> Same name as defined earlier in (1)
 
 After the restart of RHDH (or Janus local), you should see the Bazaar contents in the **Overview** tab of your entity as well as using the Sidebar link.
 

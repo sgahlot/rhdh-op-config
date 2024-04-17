@@ -6,11 +6,14 @@ dynamicPlugins:
   rootDirectory: dynamic-plugins-root
   frontend:
     bazaar-wrapper:
+      appIcons:
+        - name: bazaarStorefrontIcon
+          importName: StorefrontIcon
       dynamicRoutes:
         - importName: BazaarPage
           menuItem:
             text: Bazaar
-            icon: catalog
+            icon: bazaarStorefrontIcon
           path: /bazaar
       mountPoints:
         - mountPoint: entity.page.overview/cards
@@ -19,6 +22,7 @@ dynamicPlugins:
             layout:
               gridColumn: "1 / -1"
               width: 50vw
+
 
 # RHDH configuration
 # Frontned plugin configuration: provides the Bazaar information in the "Overview" tab as well as from a link in the Sidebar
@@ -34,11 +38,14 @@ dynamicPlugins:
         dynamicPlugins:
           frontend:
             bazaar-wrapper:
+              appIcons:
+                - name: bazaarStorefrontIcon
+                  importName: StorefrontIcon
               dynamicRoutes:
                 - importName: BazaarPage
                   menuItem:
                     text: Bazaar
-                    icon: catalog
+                    icon: bazaarStorefrontIcon
                   path: /bazaar
               mountPoints:
                 - mountPoint: entity.page.overview/cards
