@@ -15,6 +15,8 @@
 :uri-backstage-create-new-version: https://github.com/backstage/backstage/blob/25b8e7b2597e65fb033076188ce6a9d3dec3ec11/packages/create-app/package.json#L4
 :uri-janus-backstage-version: https://github.com/janus-idp/backstage-showcase/blob/main/backstage.json
 :uri-backend-plugin-template: https://github.com/janus-idp/backstage-showcase/blob/main/backstage.json
+:uri-icons: https://github.com/janus-idp/backstage-showcase/blob/main/showcase-docs/dynamic-plugins.md#extend-internal-library-of-available-icons
+:uri-icons-systen-internal: https://github.com/backstage/backstage/blob/master/packages/app-defaults/src/defaults/icons.tsx
 
 Documentation for creating and testing dynamic plugins. It provides instructions on configuring the dynamic plugins on OCP as well as testing them in your local Janus-IDP showcase instance.
 
@@ -610,6 +612,80 @@ dynamicPlugins:
 
 Configuration for most of the backend plugins will go in the above config yaml but in their own respective sections.
 
+
+== Using icons with frontend plugins
+
+Follow the steps given below to use the custom icons for your frontend plugins:
+
+. Export the icon in your plugin as shown below:
+
+[source, typescript]
+----
+export { default as fancyIcon } from '@material-ui/icons/<SOME_FANCY_ICON>';      // <.>
+----
+<.> The icon is exported as `fancyIcon`
+
+[start=2]
+. Add a reference to the exported icon in  `app-config` yaml file, as shown below:
+
+.. RHDH configuration
+
+[source, yaml]
+----
+    # ...
+    # Existing dynamic packages
+    # ...
+
+    - package: <Location_of_plugin>
+      disabled: false
+      integrity: '<HASH_VALUE>'
+      pluginConfig:
+        dynamicPLugins:
+          frontend:
+            <FRONTEND_DYNAMIC_PLUGIN_NAME>:
+              appIcons:
+               - name: textNameForTheFancyIcon
+                 importName: fancyIcon          # <.>
+               - name: chatIcon
+                 importName: chat               # <.>
+              dynamicRoutes:
+                ...
+              mountPoints:
+                ...
+----
+
+
+[start=2]
+.. Local configuration
+
+[source, yaml]
+----
+dynamicPlugins:
+  rootDirectory: dynamic-plugins-root
+  frontend:
+    <FRONTEND_DYNAMIC_PLUGIN_NAME>:
+      appIcons:
+        - name: textNameForTheFancyIcon
+          importName: fancyIcon          # <.>
+        - name: chatIcon
+          importName: chat               # <.>
+      dynamicRoutes:
+      ...
+      mountPoints:
+      ...
+      ...
+----
+<.> Custom icon that has been exported as `fancyIcon`
+<.> System icon that has been exported as `chat` in the list of _{uri-icons-systen-internal}[Backstage system icons]_
+
+[NOTE]
+====
+_{uri-icons-systen-internal}[Backstage system icons] can be used without any extra exports. To use the system icons,
+simply add them to the `app-config` yaml as shown above._
+====
+
+
+
 == References
 
 * {uri-dynamic-plugins}[RHDH - Dynamic plugin doc] +
@@ -618,3 +694,5 @@ Configuration for most of the backend plugins will go in the above config yaml b
 * {uri-backstage-create-new-app}[Backstage - create new app] +
 * {uri-backstage-create-new-version}[Backstage - create new app version (compatible with RHDH 1.1)] +
 * {uri-janus-backstage-version}[RHDH 1.1 - backstage version] +
+* {uri-icons-systen-internal}[Backstage system icons] +
+* {uri-icons}[RHDH - extend available icons] +
