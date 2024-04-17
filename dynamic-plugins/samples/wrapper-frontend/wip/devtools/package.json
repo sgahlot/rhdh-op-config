@@ -1,0 +1,33 @@
+{
+  "packageManager": "yarn@1.22.19",
+  "name": "devtools-wrapper",
+  "version": "0.1.0",
+  "description": "Wrapper for devtools frontend plugin",
+  "main": "src/index.js",
+  "author": "sgahlot",
+  "license": "Apache-2.0",
+  "backstage": {
+    "role": "frontend-plugin"
+  },
+  "dependencies": {
+    "@backstage/plugin-devtools": "0.1.9",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@backstage/cli": "0.23.1",
+    "@janus-idp/cli": "^1.7.10",
+    "react-router-dom": "^6.3.0"
+  },
+  "files": [
+    "dist",
+    "dist-scalprum"
+  ],
+  "scripts": {
+    "build": "backstage-cli package build",
+    "clean": "backstage-cli package clean",
+    "clean-dynamic-sources": "yarn clean && rm -Rf node_modules",
+    "export-dynamic": "janus-cli package export-dynamic-plugin"
+  }
+
+}
