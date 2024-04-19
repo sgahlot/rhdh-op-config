@@ -1,7 +1,7 @@
 = RHDH dynamic plugins
 :icons: font
 :note-caption: :information_source:
-:toc:
+:toc: left
 :toclevels: 5
 
 :uri-dynamic-plugins: https://github.com/janus-idp/backstage-showcase/blob/main/showcase-docs/dynamic-plugins.md#frontend-layout-configuration
