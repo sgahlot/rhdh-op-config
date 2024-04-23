@@ -1,0 +1,79 @@
+= RHDH setup/config
+
+Documentation for installing and configuring RHDH instance in a repeatable manner.
+
+:icons: font
+:note-caption: :information_source:
+
+:url-rhdh-prod-doc: https://access.redhat.com/documentation/en-us/red_hat_developer_hub/1.1
+:url-rhdh-install-using-op: https://access.redhat.com/documentation/en-us/red_hat_developer_hub/1.1/html/administration_guide_for_red_hat_developer_hub/proc-install-rhdh-operator_admin-rhdh
+:url-rhdh-add-custom-resource: https://access.redhat.com/documentation/en-us/red_hat_developer_hub/1.1/html/administration_guide_for_red_hat_developer_hub/proc-install-rhdh-operator_admin-rhdh#configuring-the-developer-hub-custom-resource
+:url-rhdh-config-dynamic-plugins: https://access.redhat.com/documentation/en-us/red_hat_developer_hub/1.1/html/administration_guide_for_red_hat_developer_hub/proc-install-rhdh-operator_admin-rhdh#configuring-dynamic-plugins-with-the-operator
+:url-rhdh-lifecycle: https://access.redhat.com/support/policy/updates/developerhub
+:url-rhdh-configure-using-docs: https://access.redhat.com/documentation/en-us/red_hat_developer_hub/1.1/html/administration_guide_for_red_hat_developer_hub/proc-install-rhdh-operator_admin-rhdh#as-a-developer
+
+
+
+
+== Prerequisites
+Install the RHDH instance using the Operator.
+
+== Configuration
+
+=== Using the config files
+
+Create a file named `.env` with the contents of `env.template` and update `.env` with the correct credentials for GitHub as well as values for all the other varibles.
+
+Once the correct values are set in the `.env` file, please run the following command to create the Backstage resources in OpenShift:
+[source,bash]
+----
+oc project <NAMESPACE_WHERE_RHDH_IS_INSTALLED>
+. ./.env                                        # <.>
+envsubst < rhdh-secrets.yml | oc apply -f -     # <.>
+oc apply -f rhdh-cms.yml                        # <.>
+oc apply -f rhdh-rbac.yml                       # <.>
+oc apply -f rhdh-cr.yml                         # <.>
+----
+<.> adds the environment variables from `.env` file, in the current environment
+<.> The `envsubst` command substitutes the variables in the `rhdh-secrets.yml` file with their values and `oc apply` will use that to create the resources.
+<.> Creates following configMaps in the namespace selected, in OpenShift:
+    . `rhdh-config-auth`
+    . `rhdh-config-main`
+    . `rhdh-config-catalog`
+    . `rhdh-config-dynamic-plugins`
+<.> Creates following configMaps, for RBAC, in the namespace selected in OpenShift:
+    . `rhdh-config-rbac`
+    . `rhdh-config-rbac-policy`
+<.> Creates and runs the RHDH/Backstage deployment using the `rhdh-cr.yml` file. This deployment uses the configMaps and secrets created in previous steps.
+
+    
+
+[NOTE]
+The `envsubst` command is available on Mac and Linux.
+
+---
+
+=== Using the official docs
+
+Please follow the instructions given in:
+
+* {url-rhdh-configure-using-docs}[Create Developer Hub instance] 
+* {url-rhdh-add-custom-resource}[Configure Developer Hub instance] +
+
+== Dynamic plugins
+
+To see the list of all the dynamic plugins, append the following to the RHDH root url: `/api/dynamic-plugins-info/loaded-plugins`. 
+
+[NOTE]
+If the RBAC plugin is installed and configured properly, the list of installed plugins is also available by using the `Administrator` link in the sidebar.
+
+
+== References
+
+* {url-rhdh-lifecycle}[RHDH - Lifecycle] +
+* {url-rhdh-prod-doc}[RHDH - Product documentation] +
+* {url-rhdh-install-using-op}[RHDH - Install using the Operator] +
+* {url-rhdh-configure-using-docs}[RHDH - Create Developer Hub instance] 
+* {url-rhdh-add-custom-resource}[RHDH - Configure Developer Hub instance] +
+* {url-rhdh-config-dynamic-plugins}[RHDH - Configure dynamic plugins] +
+

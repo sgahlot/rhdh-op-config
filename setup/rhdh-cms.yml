@@ -1,0 +1,228 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: rhdh-config-auth
+data:
+  rhdh-config.auth.yml: |
+    signInPage: github
+    auth:
+      environment: production
+      session:
+       secret: ${AUTH_SESSION_SECRET}
+      providers:
+        github:
+          production:
+            clientId: ${AUTH_GITHUB_CLIENT_ID}
+            clientSecret: ${AUTH_GITHUB_CLIENT_SECRET}
+
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: rhdh-config-main
+data:
+  rhdh-config.main.yml: |
+    app:
+      title: "RHDH AppEng Demo"
+      baseUrl: ${HOST_URL}
+      branding:
+        theme:
+          light:
+            # primaryColor: '#38be8b'
+            headerColor1: 'hsl(204 100% 71%)'
+            headerColor2: 'color(a98-rgb 1 0 0)'
+          dark:
+            # primaryColor: '#ab75cf'
+            headerColor1: '#0000d0'
+            headerColor2: 'rgb(255 246 140)'
+
+    backend:
+      baseUrl: "${HOST_URL}"
+
+      cors:
+        origin: "${HOST_URL}"
+        methods: [GET, HEAD, PATCH, POST, PUT, DELETE]
+
+      auth:
+        keys:
+          - secret: "${BACKEND_SECRET}"
+
+    integrations:
+      github:
+        - host: github.com
+          token: ${GITHUB_TOKEN}
+
+    techdocs:
+      builder: "local"
+      generator:
+        runIn: "local"
+      publisher:
+        type: "local"
+
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: rhdh-config-catalog
+data:
+  rhdh-config.catalog.yml: |
+
+    # enabled:
+    #   github: true
+    #   githubOrg: true
+
+    catalog:
+      rules:
+        - allow: [Component, System, Group, Resource, Location, Template, API, User, Domain]
+
+      # providers:
+      #   githubOrg:
+      #     githubUrl: "${GITHUB_ORG_URL}"
+
+      locations:
+        # Catalog and API entries - Janus entities
+        - type: url
+          target: https://github.com/janus-idp/backstage-showcase/blob/main/catalog-entities/all.yaml
+
+        # All the templates (shows up in Create...) - Red Hat Developer Hub Software Templates location
+        - type: url
+          target: https://github.com/redhat-developer/red-hat-developer-hub-software-templates/blob/main/templates.yaml
+
+
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: rhdh-config-dynamic-plugins
+data:
+  # The name of the yaml file has to be "dynamic-plugins.yaml"
+  dynamic-plugins.yaml: |
+    includes:
+      - dynamic-plugins.default.yaml
+
+    plugins:
+      # # GitHub auto discovery dynamic plugin
+      # - package: './dynamic-plugins/dist/backstage-plugin-catalog-backend-module-github-dynamic'
+      #   disabled: false
+      #   pluginConfig:
+      #     catalog:
+      #       providers:
+      #         github:
+      #           appengBackstage:
+      #             # It is going to auto-discover the GitHub repo specivied by the organization below
+      #             organization: '${GITHUB_ORG}'
+      #             schedule:
+      #               # supports cron, ISO duration, "human duration" (used below)
+      #               frequency: { minutes: 600}
+      #               # supports ISO duration, "human duration (used below)
+      #               timeout: { minutes: 3}
+      #               initialDelay: { seconds: 15}
+
+      - package: './dynamic-plugins/dist/janus-idp-backstage-plugin-rbac'
+        disabled: false
+      - package: './dynamic-plugins/dist/backstage-plugin-catalog-backend-module-github-dynamic'
+        disabled: false
+      # - package: ./dynamic-plugins/dist/roadiehq-backstage-plugin-argo-cd
+      #   disabled: false
+      # - package: ./dynamic-plugins/dist/roadiehq-backstage-plugin-argo-cd-backend-dynamic
+      #   disabled: false
+      # - package: './dynamic-plugins/dist/immobiliarelabs-backstage-plugin-gitlab'
+      #   disabled: false
+      # - package: './dynamic-plugins/dist/immobiliarelabs-backstage-plugin-gitlab-backend-dynamic'
+      #   disabled: false
+      - package: ./dynamic-plugins/dist/janus-idp-backstage-plugin-keycloak-backend-dynamic
+        disabled: false
+
+      # # ADR plugin
+      # - package: 'http://plugin-registry:8080/adr-wrapper-0.1.0.tgz'
+      #   disabled: false
+      #   integrity: 'PROVIDE_CORRECT_HASH'
+      #   pluginConfig:
+      #     dynamicPlugins:
+      #       frontend:
+      #         adr-wrapper:
+      #           mountPoints:
+      #             - mountPoint: entity.page.overview/cards
+      #               importName: EntityAdrContent
+      #               config:
+      #                 layout:
+      #                   gridColumn: "1 / -1"                
+      # - package: 'http://plugin-registry:8080/adr-backend-wrapper-dynamic-0.1.0.tgz'
+      #   disabled: false
+      #   integrity: 'PROVIDE_CORRECT_HASH'
+
+      # # TODO plugin
+      # - package: 'http://plugin-registry:8080/todo-wrapper-0.1.0.tgz'
+      #   disabled: false
+      #   integrity: 'PROVIDE_CORRECT_HASH'
+      #   pluginConfig:
+      #     dynamicPlugins:
+      #       frontend:
+      #         todo-wrapper:
+      #           mountPoints:
+      #             - mountPoint: entity.page.overview/cards
+      #               importName: EntityTodoContent
+      #               config:
+      #                 layout:
+      #                   gridColumn: "1 / -1"           
+      # - package: 'http://plugin-registry:8080/todo-backend-wrapper-dynamic-0.1.0.tgz'
+      #   disabled: false
+      #   integrity: 'PROVIDE_CORRECT_HASH'
+
+      # # Bazaar plugin
+      # - package: 'http://plugin-registry:8080/bazaar-wrapper-0.1.0.tgz'
+      #   disabled: false
+      #   integrity: 'PROVIDE_CORRECT_HASH'
+      #   pluginConfig:
+      #     dynamicPlugins:
+      #       frontend:
+      #         bazaar-wrapper:
+      #           appIcons:
+      #             - name: bazaarStorefrontIcon 
+      #               importName: StorefrontIcon
+      #           dynamicRoutes:
+      #             - importName: BazaarPage
+      #               menuItem:
+      #                 text: Bazaar
+      #                 icon: bazaarStorefrontIcon
+      #               path: /bazaar
+      #           mountPoints:
+      #             - mountPoint: entity.page.overview/cards
+      #               importName: BazaarOverviewCard
+      #               config:
+      #                 layout:
+      #                   gridColumn: "1 / -1"
+      #                   width: 50vw
+      # - package: 'http://plugin-registry:8080/bazaar-backend-wrapper-dynamic-0.1.0.tgz'
+      #   disabled: false
+      #   integrity: 'PROVIDE_CORRECT_HASH'
+
+      # # DevTools plugin
+      # - package: 'http://plugin-registry:8080/devtools-wrapper-0.1.0.tgz'
+      #   disabled: false
+      #   integrity: 'PROVIDE_CORRECT_HASH'
+      #   pluginConfig:
+      #     dynamicPlugins:
+      #       frontend:
+      #         devtools-wrapper:
+      #           dynamicRoutes:
+      #             - importName: DevToolsPage
+      #               menuItem:
+      #                 text: DevTools
+      #                 icon: chat
+      #               path: /devtools
+      #           mountPoints:
+      #             - mountPoint: entity.page.overview/cards
+      #               importName: DevToolsPage
+      #               config:
+      #                 layout:
+      #                   gridColumn: "1 / -1"
+      #                   width: 50vw
+      # - package: 'http://plugin-registry:8080/devtools-backend-wrapper-dynamic-0.1.0.tgz'
+      #   disabled: false
+      #   integrity: 'PROVIDE_CORRECT_HASH'
+
