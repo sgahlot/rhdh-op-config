@@ -62,10 +62,7 @@ Please follow the instructions given in:
 
 == Dynamic plugins
 
-To see the list of all the dynamic plugins, append the following to the RHDH root url: `/api/dynamic-plugins-info/loaded-plugins`. 
-
-[NOTE]
-If the RBAC plugin is installed and configured properly, the list of installed plugins is also available by using the `Administrator` link in the sidebar.
+All of the installed plugins are listed on the `Plugins` tab that can be accessed by clicking on `Administrator` link in the sidebar.
 
 
 == References
