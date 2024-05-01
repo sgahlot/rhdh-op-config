@@ -9,14 +9,18 @@ dynamicPlugins:
           importName: CustomLikeDislikeCard              # Wraps LikeDislikeButtons wrapped inside InfoCard
           config:
             layout:
-              gridColumn: "2 / -1"
+              boxShadow: 10
+              gridColumn: "1 / -1"
               width: 40vw
+              gridRow: '2 / 3'
             props:
               text: "Entity Feedback CustomLikeDislikeCard content would be here"    
         - mountPoint: entity.page.overview/cards
           importName: EntityLikeDislikeRatingsCard       # Uses EntityLikeDislikeRatingsCard
           config:
             layout:
+              boxShadow: 10
+              gridRow: '2 / 3'
               gridColumn: "1 / -1"
               width: 40vw
             props:
@@ -43,9 +47,9 @@ dynamicPlugins:
                   config:
                     layout:
                       boxShadow: 10
+                      gridRow: '2 / 3'
                       gridColumn: "1 / -1"
                       width: 40vw
-                      gridRow: '2 / 3'
                     props:
                       text: "Entity Feedback CustomLikeDislikeCard content would be here"    
                 - mountPoint: entity.page.overview/cards
@@ -55,6 +59,6 @@ dynamicPlugins:
                       boxShadow: 5
                       gridRow: '2 / 3'
                       gridColumn: "8 / -1"
-                      width: 40vw                      
+                      width: 40vw
                     props:
                       text: "Entity Feedback tab content would be here"    

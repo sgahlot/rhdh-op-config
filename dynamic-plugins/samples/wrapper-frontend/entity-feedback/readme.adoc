@@ -46,9 +46,9 @@ This wrapper can be tested in RHDH or locally. To test it, following steps shoul
                   config:
                     layout:
                       boxShadow: 10
+                      gridRow: '2 / 3'
                       gridColumn: "1 / -1"
                       width: 40vw
-                      gridRow: '2 / 3'
                     props:
                       text: "Entity Feedback CustomLikeDislikeCard content would be here"    
                 - mountPoint: entity.page.overview/cards
@@ -56,9 +56,9 @@ This wrapper can be tested in RHDH or locally. To test it, following steps shoul
                   config:
                     layout:
                       boxShadow: 10
+                      gridRow: '2 / 3'
                       gridColumn: "1 / -1"
                       width: 40vw
-                      gridRow: '2 / 3'
                     props:
                       text: "Entity Feedback tab content would be here"    
 
@@ -82,9 +82,9 @@ dynamicPlugins:
           config:
             layout:
               boxShadow: 10
+              gridRow: '2 / 3'
               gridColumn: "1 / -1"
               width: 40vw
-              gridRow: '2 / 3'
             props:
               text: "Entity Feedback CustomLikeDislikeCard content would be here"    
         - mountPoint: entity.page.overview/cards
@@ -92,9 +92,9 @@ dynamicPlugins:
           config:
             layout:
               boxShadow: 10
+              gridRow: '2 / 3'
               gridColumn: "1 / -1"
               width: 40vw
-              gridRow: '2 / 3'
             props:
               text: "Entity Feedback tab content would be here"    
 
