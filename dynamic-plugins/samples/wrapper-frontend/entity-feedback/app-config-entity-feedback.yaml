@@ -1,0 +1,60 @@
+# Local Janus configuration
+# Frontned plugin configuration: provides the Entity-Feedback information in the "Overview" tab
+dynamicPlugins:
+  rootDirectory: dynamic-plugins-root
+  frontend:
+    entity-feedback-wrapper:
+      mountPoints:
+        - mountPoint: entity.page.overview/cards
+          importName: CustomLikeDislikeCard              # Wraps LikeDislikeButtons wrapped inside InfoCard
+          config:
+            layout:
+              gridColumn: "2 / -1"
+              width: 40vw
+            props:
+              text: "Entity Feedback CustomLikeDislikeCard content would be here"    
+        - mountPoint: entity.page.overview/cards
+          importName: EntityLikeDislikeRatingsCard       # Uses EntityLikeDislikeRatingsCard
+          config:
+            layout:
+              gridColumn: "1 / -1"
+              width: 40vw
+            props:
+              text: "Entity Feedback tab content would be here"    
+
+
+# RHDH configuration
+# Frontned plugin configuration: provides the Entity-Feedback information in the "Overview" tab
+  plugins:
+    # ...
+    # Existing dynamic packages
+    # ...
+
+    - package: '<Location_of_entity-feedback_wrapper>'
+      disabled: false
+      integrity: 'ENTITY-FEEDBACK_WRAPPER_HASH'
+      pluginConfig:
+        dynamicPlugins:
+          frontend:
+            entity-feedback-wrapper:
+              mountPoints:
+                - mountPoint: entity.page.overview/cards
+                  importName: CustomLikeDislikeCard              # Wraps LikeDislikeButtons wrapped inside InfoCard
+                  config:
+                    layout:
+                      boxShadow: 10
+                      gridColumn: "1 / -1"
+                      width: 40vw
+                      gridRow: '2 / 3'
+                    props:
+                      text: "Entity Feedback CustomLikeDislikeCard content would be here"    
+                - mountPoint: entity.page.overview/cards
+                  importName: EntityLikeDislikeRatingsCard       # Uses EntityLikeDislikeRatingsCard
+                  config:
+                    layout:
+                      boxShadow: 5
+                      gridRow: '2 / 3'
+                      gridColumn: "8 / -1"
+                      width: 40vw                      
+                    props:
+                      text: "Entity Feedback tab content would be here"    

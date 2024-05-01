@@ -1,0 +1,110 @@
+= Dynamic wrapper for Entity-Feedback plugin
+:icons: font
+:note-caption: :information_source:
+:uri-entity-feedback: https://github.com/backstage/backstage/tree/v1.23.4/plugins/entity-feedback
+:uri-app-config: https://github.com/sgahlot/rhdh-op-config/blob/main/dynamic-plugins/samples/wrapper-frontend/entity-feedback/app-config-entity-feedback.yaml
+:uri-export-frontend-plugin: https://github.com/sgahlot/rhdh-op-config/tree/main/dynamic-plugins#export_frontend_plugin
+:uri-export-frontend-plugin-local: https://github.com/sgahlot/rhdh-op-config/tree/main/dynamic-plugins#export_frontend_plugin_local
+
+This directory contains files to create a dynamic plugin wrapper for the {uri-entity-feedback}[Entity Feedback] plugin
+
+== Steps
+
+To create a dynamic plugin wrapper for Entity Feedback plugin, copy the files present in this directory in a local directory and run the following commands:
+
+[source="bash",options="nowrap"]
+----
+  yarn install
+  yarn export-dynamic
+----
+
+This wrapper can be tested in RHDH or locally. To test it, following steps should be performed:
+
+. To test in RHDH instance
+** Follow {uri-export-frontend-plugin}[these instructions] to export this dynamic wrapper
+** Add the following content to a configMap:
+
+[source="yaml",options="nowrap"]
+----
+# RHDH configuration
+# Frontned plugin configuration: provides the Entity Feedback information in the "Overview" tab
+  plugins:
+    # ...
+    # Existing dynamic packages
+    # ...
+
+    - package: '<Location_of_Entity-Feedback_wrapper>'
+      disabled: false
+      integrity: 'ENTITY-FEEDBACK_WRAPPER_HASH'
+      pluginConfig:
+        dynamicPlugins:
+          frontend:
+            entity-feedback-wrapper:
+              mountPoints:
+                - mountPoint: entity.page.overview/cards
+                  importName: CustomLikeDislikeCard              # Wraps LikeDislikeButtons wrapped inside InfoCard
+                  config:
+                    layout:
+                      boxShadow: 10
+                      gridColumn: "1 / -1"
+                      width: 40vw
+                      gridRow: '2 / 3'
+                    props:
+                      text: "Entity Feedback CustomLikeDislikeCard content would be here"    
+                - mountPoint: entity.page.overview/cards
+                  importName: EntityLikeDislikeRatingsCard       # Uses EntityLikeDislikeRatingsCard
+                  config:
+                    layout:
+                      boxShadow: 10
+                      gridColumn: "1 / -1"
+                      width: 40vw
+                      gridRow: '2 / 3'
+                    props:
+                      text: "Entity Feedback tab content would be here"    
+
+----
+
+[start=2]
+. To test in Janus local instance
+** Follow {uri-export-frontend-plugin-local}[these instructions] to export this dynamic wrapper
+** Add the following content to app-config yaml:
+
+[source="yaml",options="nowrap"]
+----
+# Frontned plugin configuration: provides the Entity Feedback information in the "Overview" tab
+dynamicPlugins:
+  rootDirectory: dynamic-plugins-root
+  frontend:
+    entity-feedback-wrapper:
+      mountPoints:
+        - mountPoint: entity.page.overview/cards
+          importName: CustomLikeDislikeCard              # Wraps LikeDislikeButtons wrapped inside InfoCard
+          config:
+            layout:
+              boxShadow: 10
+              gridColumn: "1 / -1"
+              width: 40vw
+              gridRow: '2 / 3'
+            props:
+              text: "Entity Feedback CustomLikeDislikeCard content would be here"    
+        - mountPoint: entity.page.overview/cards
+          importName: EntityLikeDislikeRatingsCard       # Uses EntityLikeDislikeRatingsCard
+          config:
+            layout:
+              boxShadow: 10
+              gridColumn: "1 / -1"
+              width: 40vw
+              gridRow: '2 / 3'
+            props:
+              text: "Entity Feedback tab content would be here"    
+
+
+
+----
+
+After the restart of RHDH (or Janus local), you should see the Entity Feedback contents in the **Overview** tab of your entity.
+
+[NOTE]
+====
+_**The config provided above is also given in {uri-app-config}[Entity Feedback app config]**_
+====
