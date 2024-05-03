@@ -23,20 +23,25 @@ metadata:
   name: rhdh-config-rbac-policy
 data:
   rbac-policy.csv: |
-    p, role:default/team-x, catalog-entity, read, allow
-    p, role:default/team-x, catalog.entity, create, allow
-    p, role:default/team-x, catalog.entity, read, allow
-    p, role:default/team-x, catalog.entity, delete, allow
-    p, role:default/team-x, catalog.entity, update, allow
+    p, role:default/team-x, catalog.entity.read, read, allow
+    p, role:default/team-x, catalog.entity.create, create, allow
+    p, role:default/team-x, catalog.entity.delete, delete, allow
+    p, role:default/team-x, catalog.entity.update, update, allow
 
-    p, role:default/team-x, catalog.location, create, allow
-    p, role:default/team-x, catalog.location, read, allow
+    p, role:default/team-x, catalog.location.create, create, allow
+    p, role:default/team-x, catalog.location.read, read, allow
 
-    p, role:default/team-x, policy-entity, create, allow
-    p, role:default/team-x, policy-entity, read, allow
-    p, role:default/team-x, policy-entity, delete, allow
+    p, role:default/team-x, policy.entity.create, create, allow
+    p, role:default/team-x, policy.entity.read, read, allow
+    p, role:default/team-x, policy.entity.delete, delete, allow
 
-    p, role:default/team-x, scaffolder.action, read, allow
-    p, role:default/team-x, scaffolder.action, create, allow
+    p, role:default/team-x, scaffolder.action.read, read, allow
+    p, role:default/team-x, scaffolder.action.create, create, allow
+
+    # For DevTools (backstage plugin)
+    p, role:default/team-x, devtools.info, read, allow
+    p, role:default/team-x, devtools.administer, read, allow
+    p, role:default/team-x, devtools.config, read, allow
+    p, role:default/team-x, devtools.external-dependencies, read, allow
 
     g, user:default/sgahlot, role:default/team-x
